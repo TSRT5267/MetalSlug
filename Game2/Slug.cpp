@@ -102,7 +102,7 @@ void Slug::Update()
 			drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 		}
 		//jump
-		if (INPUT->KeyDown(VK_UP))
+		if (INPUT->KeyDown('X'))
 		{
 			state = SlugState::JUMP;
 			gravity = -300.0f;
@@ -129,7 +129,7 @@ void Slug::Update()
 		{
 			state = SlugState::IDLE;
 		}
-		if (INPUT->KeyDown(VK_UP))
+		if (INPUT->KeyDown('X'))
 		{
 			state = SlugState::JUMP;
 			gravity = -300.0f;
@@ -205,7 +205,7 @@ void Slug::Update()
 		{
 			state = SlugState::IDLE;
 		}
-		if (INPUT->KeyUp(VK_UP))
+		if (INPUT->KeyUp('X'))
 		{
 			state = SlugState::JUMP;
 		}
@@ -240,19 +240,33 @@ void Slug::Update()
 		}
 	}
 
-	//ÃÑ±¸À§Ä¡
-	if (INPUT->KeyPress(VK_RIGHT))
+	//ÃÑ±¸È¸Àü
 	{
-		if (gun->frame.x != 0)
+		
+		if (INPUT->KeyPress(VK_UP))
 		{
-			if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x -= 1;
+			if (gun->frame.x > 8)
+			{
+				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x -= 1;
+			}
+			else if ((gun->frame.x < 8))
+			{
+				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x += 1;
+			}
 		}
-	}
-	if (INPUT->KeyPress(VK_LEFT))
-	{
-		if (gun->frame.x != 16)
+		else if (INPUT->KeyPress(VK_RIGHT))
 		{
-			if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x += 1;
+			if (gun->frame.x != 0)
+			{
+				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x -= 1;
+			}
+		}
+		else if (INPUT->KeyPress(VK_LEFT))
+		{
+			if (gun->frame.x != 16)
+			{
+				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x += 1;
+			}
 		}
 	}
 
