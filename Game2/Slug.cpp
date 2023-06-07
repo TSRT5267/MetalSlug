@@ -242,11 +242,7 @@ void Slug::Update()
 	//ÃÑ±¸À§Ä¡
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
-		if (gun->frame.x != 28)
-		{
-			if (TIMER->GetTick(turndelay, 0.1f)) gun->frame.x -= 1;
-		}
-		else gun->frame.x = 28;
+		
 	}
 	if (INPUT->KeyPress(VK_LEFT))
 	{
