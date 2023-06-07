@@ -11,6 +11,8 @@ Hermit::Hermit()
 
 	col = new ObRect();
 	col->scale = walk->scale;
+	col->scale.x -= 100;
+	col->scale.y -= 210;
 	col->isFilled = false;
 	col->pivot = OFFSET_LB;
 
