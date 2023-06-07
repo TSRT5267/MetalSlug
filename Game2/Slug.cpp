@@ -49,10 +49,10 @@ Slug::Slug()
 	col->pivot = OFFSET_RB;
 
 	gun = new ObImage(L"gun.gif");
-	gun->scale.x = gun->imageSize.x * 2.0f / 32.0f;
+	gun->scale.x = gun->imageSize.x * 2.0f / 17.0f;
 	gun->scale.y = gun->imageSize.y * 2.0f;
 	gun->SetLocalPos(Vector2(-19, 42));
-	gun->maxFrame.x = 32;
+	gun->maxFrame.x = 17;
 	
 	idle->SetParentRT(*col);
 	drive->SetParentRT(*col);
@@ -149,11 +149,12 @@ void Slug::Update()
 		col->scale.y = jump->scale.y;
 		gravity += 400.0f * DELTA;
 		col->MoveWorldPos(DOWN * gravity * DELTA);
-		
+		gun->SetLocalPosY(65);
 
 		if (col->GetWorldPos().y <= -180.0f)
 		{
 			col->SetWorldPosY(-180.0f);
+			gun->SetLocalPosY(42);
 			if (INPUT->KeyPress(VK_DOWN))
 			{
 				state = SlugState::CROUCH;
@@ -242,11 +243,17 @@ void Slug::Update()
 	//ÃÑ±¸À§Ä¡
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
-		
+		if (gun->frame.x != 0)
+		{
+			if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x -= 1;
+		}
 	}
 	if (INPUT->KeyPress(VK_LEFT))
 	{
-		if (TIMER->GetTick(turndelay, 0.1f)) gun->frame.x += 1;
+		if (gun->frame.x != 16)
+		{
+			if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x += 1;
+		}
 	}
 
 	gravity += 500.0f * DELTA;
