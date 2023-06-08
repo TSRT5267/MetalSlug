@@ -9,8 +9,7 @@ private:
 	ObImage* sea2[SEAMAX];
 	
 
-	ObImage* fish;
-	ObRect* fishcol;
+	
 
 
 public:
@@ -23,7 +22,7 @@ public:
 	void Render();
 
 public:
-	ObRect* Getobjectcolfish() { return fishcol; };
+	
 	
 };
 

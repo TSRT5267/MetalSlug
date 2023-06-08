@@ -11,8 +11,7 @@ Map::Map()
 		sea2[i] = new ObImage(L"map/sea2.gif");
 	}
 		
-	fish = new ObImage(L"fish.gif");
-	fishcol = new ObRect();
+	
 	
 
 	sky->scale.x = app.GetWidth();
@@ -41,13 +40,7 @@ Map::Map()
 		sea2[i]->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	}
 
-	fish->scale.x = fish->imageSize.x * 2.0f / 12.0f;
-	fish->scale.y = fish->imageSize.y * 2.0f;
-	fish->maxFrame.x = 12;
-	fishcol = new ObRect();
-	fishcol->scale = fish->scale;
-	fishcol->isFilled = false;
-	fish->SetParentRT(*fishcol);
+	
 
 	sky->space = SPACE::SCREEN;
 	
@@ -63,13 +56,12 @@ Map::~Map()
 		delete sea1[i];
 		delete sea2[i];
 	}
-	delete fish;
-	delete fishcol;
+	
 
 	TEXTURE->DeleteTexture(L"sky.gif");	
 	TEXTURE->DeleteTexture(L"sea1.gif");	
 	TEXTURE->DeleteTexture(L"sea2.gif");	
-	TEXTURE->DeleteTexture(L"fish.gif");
+	
 }
 
 void Map::Init()
@@ -80,14 +72,13 @@ void Map::Init()
 		sea2[i]->SetWorldPos(Vector2(-1280.0 + 256.0f * i, -320.0f));
 	}
 
-	fishcol->SetWorldPos(Vector2(700.0f, -70.0f));
-	fish->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	
 
 }
 
 void Map::InitFish(Vector2 spwan)
 {
-	fishcol->SetWorldPos(spwan);
+	
 }
 
 void Map::Update()
@@ -120,12 +111,11 @@ void Map::Update()
 		sea1[i]->uv.z += DELTA * 100.0f / sea1[i]->imageSize.x;		
 	}
 
-	fishcol->MoveWorldPos(Vector2(LEFT * DELTA * 300.0f));
+	
 
 	sky->Update();
 	
-	fish->Update();
-	fishcol->Update();
+	
 	for (int i = 0;i < SEAMAX;i++)
 	{
 		sea1[i]->Update();
@@ -160,8 +150,7 @@ void Map::Render()
 	
 	
 
-	fish->Render();
-	fishcol->Render();
+	
 }
 
 

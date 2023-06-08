@@ -71,10 +71,7 @@ void Main::Update()
 void Main::LateUpdate()
 {	
 	//점수 초기화
-	if (slug->Objectcol(map->Getobjectcolfish()))
-	{		
-		score = 0;
-	}
+	
 	if (slug->GetPos()->GetWorldPos().y<-400.0f)
 	{
 		slug->OnFloor();
@@ -85,11 +82,7 @@ void Main::LateUpdate()
 		score = 0;
 	}
 		
-	//물고기 스폰
-	if (CAM->position.x - map->Getobjectcolfish()->GetWorldPos().x > 800.0f)
-	{
-		map->InitFish(Vector2(map->Getobjectcolfish()->GetWorldPos().x + 1536.0f, -70.0f));
-	}
+	
 	
 	for (int i = 0; i < GROUNDMAX; i++)
 	{
