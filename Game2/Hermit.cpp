@@ -13,7 +13,7 @@ Hermit::Hermit()
 	wave->scale.x = wave->imageSize.x * 2.0f / 12.0f;
 	wave->scale.y = wave->imageSize.y * 2.0f;
 	wave->maxFrame.x = 12;
-	wave->SetLocalPos(Vector2(20, -50));
+	wave->SetLocalPos(Vector2(80, -40));
 	wave->pivot = OFFSET_B;
 
 	col = new ObRect();
