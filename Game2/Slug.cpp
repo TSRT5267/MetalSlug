@@ -53,6 +53,14 @@ Slug::Slug()
 	gun->scale.y = gun->imageSize.y * 2.0f;
 	gun->SetLocalPos(Vector2(-19, 42));
 	gun->maxFrame.x = 17;
+
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		bullet[i] = new ObImage(L"slug/bullet.gif");
+		bullet[i]->scale.x = bullet[i]->imageSize.x * 2.0f / 17.0f;
+		bullet[i]->scale.y = bullet[i]->imageSize.y * 2.0f;
+		bullet[i]->maxFrame.x = 17;
+	}
 	
 	idle->SetParentRT(*col);
 	drive->SetParentRT(*col);
@@ -61,7 +69,10 @@ Slug::Slug()
 	crouch_idle->SetParentRT(*col);
 	crouch_drive->SetParentRT(*col);
 	gun->SetParentRT(*col);
-
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		bullet[i]->SetParentRT(*gun);
+	}
 }
 
 Slug::~Slug()
@@ -73,6 +84,10 @@ Slug::~Slug()
 	delete crouch_idle;
 	delete crouch_drive;
 	delete col;
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		delete bullet[i];
+	}
 }
 
 void Slug::Init()
@@ -270,6 +285,16 @@ void Slug::Update()
 		}
 	}
 
+	//ÃÑ¾Ë¹ß»ç
+	{
+		if (INPUT->KeyPress('Z'))
+		{
+			if (TIMER->GetTick(firedelay, 0.2f))
+			{
+				gun->frame.x;
+			}
+		}
+	}
 	gravity += 500.0f * DELTA;
 	col->MoveWorldPos(DOWN * gravity * DELTA);
 	col->scale.x -= 20;

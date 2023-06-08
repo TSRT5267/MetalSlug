@@ -1,4 +1,5 @@
 #pragma once
+#define BULLETMAX 50
 
 enum class SlugState
 {
@@ -23,11 +24,14 @@ private:
 	ObImage* crouch_drive;
 	
 	ObImage* gun;
+	ObImage* bullet[BULLETMAX];
+	float bulletlife;
 
 	SlugState state;
 	float gravity;
 	float animdelay;
 	float turndelay;
+	float firedelay;
 
 public:
 	Slug();
