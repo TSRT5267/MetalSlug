@@ -20,6 +20,7 @@ private:
 
 	HermitState state;
 	float animdelay;
+	int hp;
 public:
 	Hermit();
 	~Hermit();
