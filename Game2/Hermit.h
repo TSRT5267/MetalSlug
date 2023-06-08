@@ -8,7 +8,8 @@ enum class HermitState
 class Hermit : public GameObject
 {
 private:
-	ObRect* col;
+	ObRect* col; //하체
+	ObRect* colT; //상체
 	ObImage* walk;
 	ObImage* wave;
 
