@@ -10,6 +10,7 @@ class Hermit : public GameObject
 private:
 	ObRect* col;
 	ObImage* walk;
+	ObImage* wave;
 
 	HermitState state;
 
