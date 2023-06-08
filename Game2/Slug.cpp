@@ -6,37 +6,37 @@ Slug::Slug()
 {
 	//Çàµ¿
 	{
-		idle = new ObImage(L"slug_idle.gif");
+		idle = new ObImage(L"slug/idle.gif");
 		idle->scale.x = idle->imageSize.x * 2.0f / 3.0f;
 		idle->scale.y = idle->imageSize.y * 2.0f;
 		idle->maxFrame.x = 3;
 		idle->pivot = OFFSET_RB;
 
-		drive = new ObImage(L"slug_drive.gif");
+		drive = new ObImage(L"slug/drive.gif");
 		drive->scale.x = drive->imageSize.x * 2.0f / 20.0f;
 		drive->scale.y = drive->imageSize.y * 2.0f;
 		drive->maxFrame.x = 20;
 		drive->pivot = OFFSET_RB;
 
-		jump = new ObImage(L"slug_jump.gif");
+		jump = new ObImage(L"slug/jump.gif");
 		jump->scale.x = jump->imageSize.x * 2.0f / 8.0f;
 		jump->scale.y = jump->imageSize.y * 2.0f;
 		jump->maxFrame.x = 8;
 		jump->pivot = OFFSET_RB;
 
-		crouch = new ObImage(L"slug_crouch.gif");
+		crouch = new ObImage(L"slug/crouch.gif");
 		crouch->scale.x = crouch->imageSize.x * 2.0f / 9.0f;
 		crouch->scale.y = crouch->imageSize.y * 2.0f;
 		crouch->maxFrame.x = 9;
 		crouch->pivot = OFFSET_RB;
 
-		crouch_idle = new ObImage(L"slug_crouch_idle.gif");
+		crouch_idle = new ObImage(L"slug/crouch_idle.gif");
 		crouch_idle->scale.x = crouch_idle->imageSize.x * 2.0f / 3.0f;
 		crouch_idle->scale.y = crouch_idle->imageSize.y * 2.0f;
 		crouch_idle->maxFrame.x = 3;
 		crouch_idle->pivot = OFFSET_RB;
 
-		crouch_drive = new ObImage(L"slug_crouch_drive.gif");
+		crouch_drive = new ObImage(L"slug/crouch_drive.gif");
 		crouch_drive->scale.x = crouch_drive->imageSize.x * 2.0f / 20.0f;
 		crouch_drive->scale.y = crouch_drive->imageSize.y * 2.0f;
 		crouch_drive->maxFrame.x = 20;
@@ -48,7 +48,7 @@ Slug::Slug()
 	col->isFilled = false;
 	col->pivot = OFFSET_RB;
 
-	gun = new ObImage(L"gun.gif");
+	gun = new ObImage(L"slug/gun.gif");
 	gun->scale.x = gun->imageSize.x * 2.0f / 17.0f;
 	gun->scale.y = gun->imageSize.y * 2.0f;
 	gun->SetLocalPos(Vector2(-19, 42));

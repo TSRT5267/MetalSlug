@@ -4,11 +4,11 @@
 
 Map::Map()
 {
-	sky = new ObImage(L"sky.gif");	
+	sky = new ObImage(L"map/sky.gif");	
 	for (int i = 0;i < SEAMAX;i++)
 	{
-		sea1[i] = new ObImage(L"sea1.gif");
-		sea2[i] = new ObImage(L"sea2.gif");
+		sea1[i] = new ObImage(L"map/sea1.gif");
+		sea2[i] = new ObImage(L"map/sea2.gif");
 	}
 		
 	fish = new ObImage(L"fish.gif");

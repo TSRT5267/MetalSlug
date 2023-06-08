@@ -3,13 +3,13 @@
 
 Hermit::Hermit()
 {
-	walk = new ObImage(L"Walk.gif");
+	walk = new ObImage(L"hermit/Walk.gif");
 	walk->scale.x = walk->imageSize.x * 2.0f / 12.0f;
 	walk->scale.y = walk->imageSize.y * 2.0f;
 	walk->maxFrame.x = 12;
 	walk->pivot = OFFSET_B;
 
-	wave = new ObImage(L"wave.gif");
+	wave = new ObImage(L"hermit/wave.gif");
 	wave->scale.x = wave->imageSize.x * 2.0f / 12.0f;
 	wave->scale.y = wave->imageSize.y * 2.0f;
 	wave->maxFrame.x = 12;
