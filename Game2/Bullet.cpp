@@ -4,8 +4,8 @@
 Bullet::Bullet()
 {
 	image = new ObImage(L"slug/bullet.gif");
-	image->scale.x = image->imageSize.x * 2.0f / 17.0f;
-	image->scale.y = image->imageSize.y * 2.0f;
+	image->scale.x = image->imageSize.x * 1.0f / 17.0f;
+	image->scale.y = image->imageSize.y * 1.0f;
 	image->maxFrame.x = 17;
 	pivot = OFFSET_R;
 
@@ -46,6 +46,7 @@ void Bullet::Update()
 
 void Bullet::Render()
 {
+	if (not isfire) return;
 	image->Render();
 	col->Render();
 }
