@@ -12,8 +12,9 @@ Bullet::Bullet()
 	col = new ObRect();
 	col->scale = image->scale;
 	col->isFilled = false;
-
+	col->SetWorldPos(Vector2(0, 1000));
 	isfire = false;
+	life = 0.0f;
 
 	image->SetParentRT(*col);
 }
@@ -34,14 +35,12 @@ void Bullet::Update()
 	if (not isfire) return;
 
 
-	life -= DELTA;
-	if (life == 0) isfire = false;
-
-
-
-	col->MoveWorldPos(GetRight() * DELTA * 200);
+	col->MoveWorldPos(firedir * DELTA * 1000);
 	image->Update();
 	col->Update();
+
+	life -= DELTA;
+	if (life < 0) isfire = false;
 }
 
 void Bullet::Render()
@@ -54,8 +53,17 @@ void Bullet::Render()
 void Bullet::Fire(ObImage* Gun)
 {
 	isfire = true;
-	life = 3.0f;
-	col->SetWorldPos(Gun->GetWorldPos());
-	col->rotation.z = 180.0f - 180.0f / Gun->frame.x;
-	col->SetWorldPos(col->GetRight() * 60.0f);	
+	life = 2.0f;
+	float dig = (180.0f - 180.0f / 17.0f * Gun->frame.x) * ToRadian;
+	firedir = Vector2(cosf(dig),sinf(dig));	
+	col->SetWorldPos(Gun->GetWorldPos()+firedir*60);
+	
+	image->frame.x = Gun->frame.x;
+	
+	
+
+	
+	
 }
+
+

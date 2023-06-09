@@ -18,5 +18,6 @@ public:
 
 	void Fire(ObImage* Gun);
 	bool Getisfire() { return isfire; }
-};
+	void SetcolParent(ObImage* Gun) { col->SetParentRT(*Gun); }
+;};
 

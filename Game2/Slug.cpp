@@ -57,7 +57,7 @@ Slug::Slug()
 
 	for (int i = 0; i < BULLETMAX; i++)
 	{
-		bullet[i] = new Bullet;	
+		bullet[i] = new Bullet;		
 	}
 	
 	idle->SetParentRT(*col);

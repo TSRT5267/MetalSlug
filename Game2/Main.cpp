@@ -41,6 +41,8 @@ void Main::Release()
 
 void Main::Update()
 {
+	//ImGui::Text("test: %f\n", cosf(180.0f*ToRadian));
+
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
 		slug->GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
