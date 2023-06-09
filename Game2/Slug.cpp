@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Slug.h"
 #include "Map.h"
+#include "Bullet.h"
 
 Slug::Slug()
 {
@@ -56,12 +57,7 @@ Slug::Slug()
 
 	for (int i = 0; i < BULLETMAX; i++)
 	{
-		bullet[i] = new ObImage(L"slug/bullet.gif");
-		bullet[i]->scale.x = bullet[i]->imageSize.x * 2.0f / 17.0f;
-		bullet[i]->scale.y = bullet[i]->imageSize.y * 2.0f;
-		bullet[i]->maxFrame.x = 17;
-		bulletlife[i] = 0.0f;
-		isfire[i] = false;
+		bullet[i] = new Bullet;	
 	}
 	
 	idle->SetParentRT(*col);
@@ -295,20 +291,18 @@ void Slug::Update()
 			{
 				for (int i = 0; i < BULLETMAX; i++)
 				{
-					if (isfire[i] == false) isfire[i] = true;
+					if (not bullet[i]->Getisfire())
+					{
+						bullet[i]->Fire(gun);
+						break;
+					}
 				}
 			}
 		}
 	}
-	for (int i = 0; i < BULLETMAX; i++)
-	{
-		if (isfire[i] == true)
-		{
-			bulletlife[i] = 3.0f
+	
+	
 
-			bullet[i]
-		}
-	}
 
 
 	gravity += 500.0f * DELTA;
@@ -323,6 +317,10 @@ void Slug::Update()
 	crouch_idle->Update();
 	crouch_drive->Update();
 	gun->Update();
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		bullet[i]->Update();
+	}
 }
 
 bool Slug::Objectcol(GameObject* ob)
@@ -374,4 +372,8 @@ void Slug::Render()
 	}
 
 	gun->Render();
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		bullet[i]->Render();
+	}
 }
