@@ -25,7 +25,8 @@ private:
 	
 	ObImage* gun;
 	ObImage* bullet[BULLETMAX];
-	float bulletlife;
+	float bulletlife[BULLETMAX];
+	bool isfire[BULLETMAX];
 
 	SlugState state;
 	float gravity;

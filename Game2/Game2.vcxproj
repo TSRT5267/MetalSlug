@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hermit.h" />
     <ClInclude Include="Main.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hermit.cpp" />
     <ClCompile Include="Main.cpp" />

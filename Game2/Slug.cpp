@@ -60,6 +60,8 @@ Slug::Slug()
 		bullet[i]->scale.x = bullet[i]->imageSize.x * 2.0f / 17.0f;
 		bullet[i]->scale.y = bullet[i]->imageSize.y * 2.0f;
 		bullet[i]->maxFrame.x = 17;
+		bulletlife[i] = 0.0f;
+		isfire[i] = false;
 	}
 	
 	idle->SetParentRT(*col);
@@ -289,18 +291,30 @@ void Slug::Update()
 	{
 		if (INPUT->KeyPress('Z'))
 		{
-			if (TIMER->GetTick(firedelay, 0.2f))
+			if (TIMER->GetTick(firedelay, 0.1f))
 			{
-				gun->frame.x;
+				for (int i = 0; i < BULLETMAX; i++)
+				{
+					if (isfire[i] == false) isfire[i] = true;
+				}
 			}
 		}
 	}
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		if (isfire[i] == true)
+		{
+			bulletlife[i] = 3.0f
+
+			bullet[i]
+		}
+	}
+
+
 	gravity += 500.0f * DELTA;
 	col->MoveWorldPos(DOWN * gravity * DELTA);
 	col->scale.x -= 20;
 	
-
-
 	col->	Update();
 	idle->	Update();
 	drive->	Update();

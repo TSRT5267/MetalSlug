@@ -7,6 +7,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Hermit.h" />
+    <ClInclude Include="Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -14,5 +15,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Hermit.cpp" />
+    <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
 </Project>
