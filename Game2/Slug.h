@@ -16,6 +16,7 @@ class Slug : public GameObject
 {
 private:
 	ObRect* col;
+	ObRect* colb;
 	ObImage* idle;
 	ObImage* drive;
 	ObImage* jump;
@@ -45,5 +46,6 @@ public:
 
 	SlugState Getstate() { return state; };
 	ObRect* GetPos() { return col; };
+	ObRect* Getbottom() { return colb; };
 };
 

@@ -20,9 +20,9 @@ Slug::Slug()
 		drive->pivot = OFFSET_RB;
 
 		jump = new ObImage(L"slug/jump.gif");
-		jump->scale.x = jump->imageSize.x * 2.0f / 8.0f;
+		jump->scale.x = jump->imageSize.x * 2.0f / 10.0f;
 		jump->scale.y = jump->imageSize.y * 2.0f;
-		jump->maxFrame.x = 8;
+		jump->maxFrame.x = 10;
 		jump->pivot = OFFSET_RB;
 
 		crouch = new ObImage(L"slug/crouch.gif");
@@ -49,6 +49,13 @@ Slug::Slug()
 	col->isFilled = false;
 	col->pivot = OFFSET_RB;
 
+	colb = new ObRect();
+	colb->scale = idle->scale;
+	colb->scale -= Vector2(50, 110);
+	colb->color = Vector4(0, 0, 0, 1);
+	colb->isFilled = false;
+	colb->pivot = OFFSET_RB;
+
 	gun = new ObImage(L"slug/gun.gif");
 	gun->scale.x = gun->imageSize.x * 2.0f / 17.0f;
 	gun->scale.y = gun->imageSize.y * 2.0f;
@@ -67,6 +74,7 @@ Slug::Slug()
 	crouch_idle->SetParentRT(*col);
 	crouch_drive->SetParentRT(*col);
 	gun->SetParentRT(*col);
+	colb->SetParentRT(*col);
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		bullet[i]->SetParentRT(*gun);
@@ -82,6 +90,7 @@ Slug::~Slug()
 	delete crouch_idle;
 	delete crouch_drive;
 	delete col;
+	delete colb;
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		delete bullet[i];
@@ -120,7 +129,7 @@ void Slug::Update()
 			state = SlugState::JUMP;
 			gravity = -300.0f;
 			col->SetWorldPosY(-179.0f);
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
 		//crouch
 		if (INPUT->KeyDown(VK_DOWN))
@@ -147,7 +156,7 @@ void Slug::Update()
 			state = SlugState::JUMP;
 			gravity = -300.0f;
 			col->SetWorldPosY(-179.0f);
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
 		if (INPUT->KeyDown(VK_DOWN))
 		{
@@ -160,13 +169,13 @@ void Slug::Update()
 	{
 		col->scale.x = jump->scale.x;
 		col->scale.y = jump->scale.y;
-		gravity += 400.0f * DELTA;
+		gravity += 500.0f * DELTA;
 		col->MoveWorldPos(DOWN * gravity * DELTA);
 		gun->SetLocalPosY(65);
 
-		if (col->GetWorldPos().y <= -180.0f)
+		if (colb->GetWorldPos().y <= -200.0f)
 		{
-			col->SetWorldPosY(-180.0f);
+			col->SetWorldPosY(-200.0f);
 			gun->SetLocalPosY(42);
 			if (INPUT->KeyPress(VK_DOWN))
 			{
@@ -307,9 +316,10 @@ void Slug::Update()
 
 	gravity += 500.0f * DELTA;
 	col->MoveWorldPos(DOWN * gravity * DELTA);
-	col->scale.x -= 20;
+	col->scale.x -= 20;	
 	
 	col->	Update();
+	colb->	Update();
 	idle->	Update();
 	drive->	Update();
 	jump->	Update();
@@ -348,6 +358,7 @@ void Slug::OnFloor()
 void Slug::Render()
 {
 	col->Render();
+	colb->Render();
 
 	switch (state)
 	{

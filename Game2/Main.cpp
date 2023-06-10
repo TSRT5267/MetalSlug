@@ -72,8 +72,7 @@ void Main::Update()
 
 void Main::LateUpdate()
 {	
-	//점수 초기화
-	
+		
 	if (slug->GetPos()->GetWorldPos().y<-400.0f)
 	{
 		slug->OnFloor();
@@ -97,10 +96,10 @@ void Main::LateUpdate()
 		// 충돌 (슬러그)
 		if (ground[i]->active)
 		{
-			if (ground[i]->col->Intersect(slug->GetPos()))
+			if (ground[i]->col->Intersect(slug->Getbottom()))
 			{
 				slug->OnFloor();
-				slug->color = Vector4(1, 1, 1, 1);
+				//slug->color = Vector4(1, 1, 1, 1);
 			}
 		}
 		// 충돌 (허밋)
