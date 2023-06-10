@@ -7,12 +7,12 @@ Bullet::Bullet()
 	image->scale.x = image->imageSize.x * 1.0f / 17.0f;
 	image->scale.y = image->imageSize.y * 1.0f;
 	image->maxFrame.x = 17;
-	pivot = OFFSET_R;
 
 	col = new ObRect();
 	col->scale = image->scale;
+	col->scale -= Vector2(30, 30);
 	col->isFilled = false;
-	col->SetWorldPos(Vector2(0, 1000));
+	//col->color = Vector4(0, 0, 0, 0);
 	isfire = false;
 	life = 0.0f;
 
@@ -35,7 +35,7 @@ void Bullet::Update()
 	if (not isfire) return;
 
 
-	col->MoveWorldPos(firedir * DELTA * 1000);
+	col->MoveWorldPos(firedir * DELTA * 900);
 	image->Update();
 	col->Update();
 
