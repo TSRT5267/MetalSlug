@@ -3,6 +3,8 @@
 
 Hermit::Hermit()
 {
+	hp = 600;
+
 	//ÀÌ¹ÌÁö
 	{
 		walk = new ObImage(L"hermit/walk.gif");
@@ -153,3 +155,4 @@ void Hermit::Render()
 
 	wave->Render();
 }
+

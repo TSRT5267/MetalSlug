@@ -28,7 +28,11 @@ public:
 	void Update();
 	void Render();
 
+	void Hit(int Damage) { hp -= Damage; };
+
 	ObRect* GetPos() { return col; };
+	ObRect* GetPosT() { return colT; };
+	int GetHP() { return hp; }
 	
 };
 

@@ -25,7 +25,7 @@ private:
 	ObImage* crouch_drive;
 	
 	ObImage* gun;
-	class Bullet* bullet[BULLETMAX];
+	
 	
 
 	SlugState state;
@@ -35,6 +35,8 @@ private:
 	float firedelay;
 
 public:
+	class Bullet* bullet[BULLETMAX];
+
 	Slug();
 	~Slug();	
 	void Init();
@@ -47,5 +49,6 @@ public:
 	SlugState Getstate() { return state; };
 	ObRect* GetPos() { return col; };
 	ObRect* Getbottom() { return colb; };
+		
 };
 

@@ -155,7 +155,8 @@ void Slug::Update()
 		{
 			state = SlugState::JUMP;
 			gravity = -300.0f;
-			col->SetWorldPosY(-179.0f);
+			//col->SetWorldPosY(-179.0f);
+			col->MoveWorldPos(UP);
 			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
 		if (INPUT->KeyDown(VK_DOWN))

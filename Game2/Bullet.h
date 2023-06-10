@@ -18,6 +18,6 @@ public:
 
 	void Fire(ObImage* Gun);
 	bool Getisfire() { return isfire; }
-	void SetcolParent(ObImage* Gun) { col->SetParentRT(*Gun); }
-;};
-
+	ObRect* GetPos() { return col; };
+	void Hit() { isfire = false; };
+};

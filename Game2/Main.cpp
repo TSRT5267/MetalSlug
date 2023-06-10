@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Ground.h"
 #include "Hermit.h"
+#include "Bullet.h"
 
 Main::Main()
 {
@@ -41,7 +42,7 @@ void Main::Release()
 
 void Main::Update()
 {
-	//ImGui::Text("test: %f\n", cosf(180.0f*ToRadian));
+	ImGui::Text("hermitHP: %i\n",hermit->GetHP() );
 
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
@@ -84,7 +85,7 @@ void Main::LateUpdate()
 	}
 		
 	
-	
+	//바닥
 	for (int i = 0; i < GROUNDMAX; i++)
 	{
 		//바닥이 화면 밖으로 벗어났을때 스폰
@@ -112,7 +113,21 @@ void Main::LateUpdate()
 			}
 		}
 	}
-
+	
+	//플레이어 공격
+	for (int i = 0; i < BULLETMAX; i++)
+	{
+		if (slug->bullet[i]->Getisfire())
+		{
+			if (slug->bullet[i]->GetPos()->Intersect(hermit->GetPos())or
+				slug->bullet[i]->GetPos()->Intersect(hermit->GetPosT()))
+			{
+				//총은 1데미지
+				hermit->Hit(1);
+				slug->bullet[i]->Hit();
+			}
+		}		
+	}
 	map->LateUpdate();
 }
 

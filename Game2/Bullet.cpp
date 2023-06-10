@@ -35,7 +35,7 @@ void Bullet::Update()
 	if (not isfire) return;
 
 
-	col->MoveWorldPos(firedir * DELTA * 900);
+	col->MoveWorldPos(firedir * DELTA * 800);
 	image->Update();
 	col->Update();
 
@@ -54,16 +54,14 @@ void Bullet::Fire(ObImage* Gun)
 {
 	isfire = true;
 	life = 2.0f;
-	float dig = (180.0f - 180.0f / 17.0f * Gun->frame.x) * ToRadian;
+	float dig = (180.0f - 180.0f / 16.0f * Gun->frame.x) * ToRadian;
 	firedir = Vector2(cosf(dig),sinf(dig));	
 	col->SetWorldPos(Gun->GetWorldPos()+firedir*60);
 	
 	image->frame.x = Gun->frame.x;
-	
-	
 
-	
-	
 }
+
+
 
 
