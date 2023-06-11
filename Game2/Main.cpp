@@ -55,7 +55,7 @@ void Main::Update()
 		//CAM->position += LEFT * 300.0f * DELTA;
 	}
 
-	CAM->position += RIGHT * 100.0f * DELTA;
+	if (not gameover) CAM->position += RIGHT * 100.0f * DELTA;
 
 	map->Update();
 	slug->Update();
@@ -66,9 +66,6 @@ void Main::Update()
 	}
 
 	score += 10 * DELTA;
-	ImGui::Text("SCORE: %f\n", score);
-	ImGui::Text("\n");
-	
 }
 
 void Main::LateUpdate()
@@ -115,6 +112,7 @@ void Main::LateUpdate()
 	}
 	
 	//플레이어 공격
+	if (hermit->GetHP() < 0) gameover = true;
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		if (slug->bullet[i]->Getisfire())

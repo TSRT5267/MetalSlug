@@ -5,12 +5,13 @@ class Main : public Scene
 private:
 	
 	class Slug* slug;
-
 	class Hermit* hermit;
 	class Map* map;
 	class Ground* ground[GROUNDMAX];
 
+	bool gameover;
 	float score;
+
 public:
 	Main();
 	~Main();
