@@ -142,7 +142,13 @@ void Slug::Update()
 	{
 		col->scale = drive->scale;
 		
-
+		if (INPUT->KeyPress('X'))
+		{
+			state = SlugState::JUMP;
+			gravity = -300.0f;
+			col->MoveWorldPos(UP);
+			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+		}
 		if (INPUT->KeyUp(VK_RIGHT))
 		{
 			state = SlugState::IDLE;
@@ -150,14 +156,6 @@ void Slug::Update()
 		if (INPUT->KeyUp(VK_LEFT))
 		{
 			state = SlugState::IDLE;
-		}
-		if (INPUT->KeyDown('X'))
-		{
-			state = SlugState::JUMP;
-			gravity = -300.0f;
-			//col->SetWorldPosY(-179.0f);
-			col->MoveWorldPos(UP);
-			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
 		if (INPUT->KeyDown(VK_DOWN))
 		{
@@ -168,8 +166,7 @@ void Slug::Update()
 	}
 	else if (state == SlugState::JUMP)
 	{
-		col->scale.x = jump->scale.x;
-		col->scale.y = jump->scale.y;
+		col->scale = jump->scale;
 		gravity += 500.0f * DELTA;
 		col->MoveWorldPos(DOWN * gravity * DELTA);
 		gun->SetLocalPosY(65);
@@ -295,19 +292,16 @@ void Slug::Update()
 
 	//ÃÑ¾Ë¹ß»ç
 	{
-		if (INPUT->KeyPress('Z'))
-		{
-			if (TIMER->GetTick(firedelay, 0.1f))
+		if (INPUT->KeyPress('Z') and TIMER->GetTick(firedelay, 0.1f))
+		{			
+			for (int i = 0; i < BULLETMAX; i++)
 			{
-				for (int i = 0; i < BULLETMAX; i++)
+				if (not bullet[i]->Getisfire())
 				{
-					if (not bullet[i]->Getisfire())
-					{
-						bullet[i]->Fire(gun);
-						break;
-					}
+					bullet[i]->Fire(gun);
+					break;
 				}
-			}
+			}		
 		}
 	}
 	

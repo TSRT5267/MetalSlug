@@ -23,6 +23,10 @@ Main::~Main()
 	delete slug;
 	delete map;
 	delete hermit;
+	for (int i = 0; i < GROUNDMAX; i++)
+	{
+		delete ground[i];
+	}
 }
 
 void Main::Init()
@@ -136,9 +140,9 @@ void Main::Render()
 	{
 		ground[i]->Render();
 	}
-	slug->Render();
-	hermit->Render();
 	
+	hermit->Render();
+	slug->Render();
 }
 
 void Main::ResizeScreen()
