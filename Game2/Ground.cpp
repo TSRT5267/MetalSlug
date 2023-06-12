@@ -3,7 +3,7 @@
 
 Ground::Ground()
 {
-	ground = new ObImage(L"ground.gif");
+	ground = new ObImage(L"map/ground.gif");
 	ground->scale.x = ground->imageSize.x*2.0f;
 	ground->scale.y = ground->imageSize.y*2.0f;
 	ground->pivot = OFFSET_LT;
