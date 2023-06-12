@@ -2,6 +2,7 @@
 #include "Slug.h"
 #include "Map.h"
 #include "Bullet.h"
+#include "Hermit.h"
 
 Slug::Slug()
 {
@@ -25,6 +26,12 @@ Slug::Slug()
 		jump->maxFrame.x = 10;
 		jump->pivot = OFFSET_RB;
 
+		shooting = new ObImage(L"slug/shooting.gif");
+		shooting->scale.x = shooting->imageSize.x * 2.0f / 20.0f;
+		shooting->scale.y = shooting->imageSize.y * 2.0f;
+		shooting->maxFrame.x = 20;
+		shooting->pivot = OFFSET_RB;
+
 		crouch = new ObImage(L"slug/crouch.gif");
 		crouch->scale.x = crouch->imageSize.x * 2.0f / 9.0f;
 		crouch->scale.y = crouch->imageSize.y * 2.0f;
@@ -42,6 +49,12 @@ Slug::Slug()
 		crouch_drive->scale.y = crouch_drive->imageSize.y * 2.0f;
 		crouch_drive->maxFrame.x = 20;
 		crouch_drive->pivot = OFFSET_RB;
+
+		crouch_shooting = new ObImage(L"slug/crouch_shooting.gif");
+		crouch_shooting->scale.x = crouch_shooting->imageSize.x * 2.0f / 8.0f;
+		crouch_shooting->scale.y = crouch_shooting->imageSize.y * 2.0f;
+		crouch_shooting->maxFrame.x = 8;
+		crouch_shooting->pivot = OFFSET_RB;
 	}
 
 	col = new ObRect();
@@ -124,11 +137,11 @@ void Slug::Update()
 			drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 		}
 		//jump
-		if (INPUT->KeyDown('X'))
+		if (INPUT->KeyPress('X'))
 		{
 			state = SlugState::JUMP;
 			gravity = -300.0f;
-			col->SetWorldPosY(-179.0f);
+			col->MoveWorldPos(UP);
 			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
 		//crouch
@@ -225,10 +238,6 @@ void Slug::Update()
 		{
 			state = SlugState::IDLE;
 		}
-		if (INPUT->KeyUp('X'))
-		{
-			state = SlugState::JUMP;
-		}
 		//crouch_drive(->)
 		if (INPUT->KeyPress(VK_RIGHT))
 		{
@@ -259,6 +268,19 @@ void Slug::Update()
 			state = SlugState::CROUCH_IDLE;
 		}
 	}
+	
+
+	//슬러그이동
+	if (INPUT->KeyPress(VK_RIGHT))
+	{
+		GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
+		//CAM->position += RIGHT * 300.0f * DELTA;
+	}
+	if (INPUT->KeyPress(VK_LEFT))
+	{
+		GetPos()->MoveWorldPos(LEFT * 300.0f * DELTA);
+		//CAM->position += LEFT * 300.0f * DELTA;
+	}
 
 	//총구회전
 	{
@@ -276,14 +298,14 @@ void Slug::Update()
 		}
 		else if (INPUT->KeyPress(VK_RIGHT))
 		{
-			if (gun->frame.x != 0)
+			if (gun->frame.x > 0)
 			{
 				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x -= 1;
 			}
 		}
 		else if (INPUT->KeyPress(VK_LEFT))
 		{
-			if (gun->frame.x != 16)
+			if (gun->frame.x < 16)
 			{
 				if (TIMER->GetTick(turndelay, 0.05f)) gun->frame.x += 1;
 			}
@@ -328,20 +350,7 @@ void Slug::Update()
 	}
 }
 
-bool Slug::Objectcol(GameObject* ob)
-{
-	if (col->Intersect(ob))
-	{
-		col->color = Vector4(1, 0, 0, 1);
-		return true;
-	}
-	else
-	{
-		col->color = Vector4(1, 1, 1, 1);
-		return false;
-	}
 
-}
 
 void Slug::OnFloor()
 {		
@@ -362,7 +371,7 @@ void Slug::Render()
 		break;
 	case SlugState::DRIVE:
 		drive->Render();
-		break;
+		break;	
 	case SlugState::JUMP:
 		jump->Render();
 		break;

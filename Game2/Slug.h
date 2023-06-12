@@ -9,6 +9,7 @@ enum class SlugState
 	CROUCH,
 	CROUCH_IDLE,
 	CROUCH_DRIVE,
+	
 };
 
 
@@ -17,14 +18,19 @@ class Slug : public GameObject
 private:
 	ObRect* col;
 	ObRect* colb;
+
 	ObImage* idle;
 	ObImage* drive;
 	ObImage* jump;
+	ObImage* shooting;
 	ObImage* crouch;
 	ObImage* crouch_idle;
 	ObImage* crouch_drive;
+	ObImage* crouch_shooting;
 	
 	ObImage* gun;
+	class Bullet* bullet[BULLETMAX];
+	//ObImage* cannon;
 	
 	
 
@@ -35,7 +41,7 @@ private:
 	float firedelay;
 
 public:
-	class Bullet* bullet[BULLETMAX];
+	
 
 	Slug();
 	~Slug();	
@@ -43,12 +49,13 @@ public:
 	void Update();	
 	void Render();
 
-	bool Objectcol(GameObject* ob);
+	
 	void OnFloor();
 
 	SlugState Getstate() { return state; };
 	ObRect* GetPos() { return col; };
 	ObRect* Getbottom() { return colb; };
+	Bullet* Getbullet(int i) { return bullet[i]; };
 		
 };
 

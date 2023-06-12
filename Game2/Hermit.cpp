@@ -31,6 +31,24 @@ Hermit::Hermit()
 		undeploy_cannon->maxFrame.x = 12;
 		undeploy_cannon->pivot = OFFSET_B;
 
+		bulletfire = new ObImage(L"hermit/bulletfire.gif");
+		bulletfire->scale.x = bulletfire->imageSize.x * 2.0f / 12.0f;
+		bulletfire->scale.y = bulletfire->imageSize.y * 2.0f;
+		bulletfire->maxFrame.x = 12;
+		bulletfire->pivot = OFFSET_B;
+
+		cannonfire = new ObImage(L"hermit/cannonfire.gif");
+		cannonfire->scale.x = cannonfire->imageSize.x * 2.0f / 12.0f;
+		cannonfire->scale.y = cannonfire->imageSize.y * 2.0f;
+		cannonfire->maxFrame.x = 12;
+		cannonfire->pivot = OFFSET_B;
+
+		destroyed = new ObImage(L"hermit/destroyed.gif");
+		destroyed->scale.x = destroyed->imageSize.x * 2.0f / 12.0f;
+		destroyed->scale.y = destroyed->imageSize.y * 2.0f;
+		destroyed->maxFrame.x = 12;
+		destroyed->pivot = OFFSET_B;
+
 		wave = new ObImage(L"hermit/wave.gif");
 		wave->scale.x = wave->imageSize.x * 2.0f / 12.0f;
 		wave->scale.y = wave->imageSize.y * 2.0f;
@@ -69,6 +87,9 @@ Hermit::~Hermit()
 	delete walk_cannon;
 	delete deploy_cannon;
 	delete undeploy_cannon;
+	delete bulletfire;
+	delete cannonfire;
+	delete destroyed;
 }
 
 void Hermit::Init()
@@ -81,6 +102,7 @@ void Hermit::Init()
 
 void Hermit::Update()
 {
+	//WALK·Î ½ÃÀÛ
 	if (state == HermitState::WALK)
 	{
 		
@@ -150,6 +172,15 @@ void Hermit::Render()
 		break;
 	case HermitState::UNDEPLOY_CANNON:
 		undeploy_cannon->Render();
+		break;
+	case HermitState::BULLETFIRE:
+		bulletfire->Render();
+		break;
+	case HermitState::CANNONFIRE:
+		cannonfire->Render();
+		break;
+	case HermitState::DESTROYED:
+		destroyed->Render();
 		break;
 	}
 

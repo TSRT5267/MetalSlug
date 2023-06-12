@@ -48,17 +48,6 @@ void Main::Update()
 {
 	ImGui::Text("hermitHP: %i\n",hermit->GetHP() );
 
-	if (INPUT->KeyPress(VK_RIGHT))
-	{
-		slug->GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
-		//CAM->position += RIGHT * 300.0f * DELTA;
-	}
-	if (INPUT->KeyPress(VK_LEFT))
-	{
-		slug->GetPos()->MoveWorldPos(LEFT * 300.0f * DELTA);
-		//CAM->position += LEFT * 300.0f * DELTA;
-	}
-
 	if (not gameover) CAM->position += RIGHT * 100.0f * DELTA;
 
 	map->Update();
@@ -119,14 +108,14 @@ void Main::LateUpdate()
 	if (hermit->GetHP() < 0) gameover = true;
 	for (int i = 0; i < BULLETMAX; i++)
 	{
-		if (slug->bullet[i]->Getisfire())
+		if (slug->Getbullet(i)->Getisfire())
 		{
-			if (slug->bullet[i]->GetPos()->Intersect(hermit->GetPos())or
-				slug->bullet[i]->GetPos()->Intersect(hermit->GetPosT()))
+			if (slug->Getbullet(i)->GetPos()->Intersect(hermit->GetPos())or
+				slug->Getbullet(i)->GetPos()->Intersect(hermit->GetPosT()))
 			{
 				//ÃÑÀº 1µ¥¹ÌÁö
 				hermit->Hit(1);
-				slug->bullet[i]->Hit();
+				slug->Getbullet(i)->Hit();
 			}
 		}		
 	}

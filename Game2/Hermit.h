@@ -5,7 +5,11 @@ enum class HermitState
 	WALK,
 	WALK_CANNON,
 	DEPLOY_CANNON,
-	UNDEPLOY_CANNON
+	UNDEPLOY_CANNON,
+	BULLETFIRE,
+	CANNONFIRE,
+	DESTROYED,
+
 };
 class Hermit : public GameObject
 {
@@ -17,6 +21,9 @@ private:
 	ObImage* wave;
 	ObImage* deploy_cannon;
 	ObImage* undeploy_cannon;
+	ObImage* bulletfire;
+	ObImage* cannonfire;
+	ObImage* destroyed;
 
 	HermitState state;
 	float animdelay;
