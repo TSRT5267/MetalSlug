@@ -90,6 +90,15 @@ Hermit::~Hermit()
 	delete bulletfire;
 	delete cannonfire;
 	delete destroyed;
+
+	TEXTURE->DeleteTexture(L"hermit/walk.gif");
+	TEXTURE->DeleteTexture(L"hermit/walk_cannon.gif");
+	TEXTURE->DeleteTexture(L"hermit/deploy_cannon.gif");
+	TEXTURE->DeleteTexture(L"hermit/undeploy_cannon.gif");
+	TEXTURE->DeleteTexture(L"hermit/bulletfire.gif");
+	TEXTURE->DeleteTexture(L"hermit/cannonfire.gif");
+	TEXTURE->DeleteTexture(L"hermit/destroyed.gif");
+	TEXTURE->DeleteTexture(L"hermit/wave.gif");
 }
 
 void Hermit::Init()
@@ -105,13 +114,21 @@ void Hermit::Update()
 	//WALK·Î ½ÃÀÛ
 	if (state == HermitState::WALK)
 	{
-		
-			if (INPUT->KeyPress('Q'))
+		if (TIMER->GetTick(animdelay, 1.2f) and hp < 580)
+			if (TIMER->GetTick(animdelay, 1.2f) and hp<580)
 			{
-				state = HermitState::DEPLOY_CANNON;
-				deploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+				state = HermitState::BULLETFIRE;
+				bulletfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 			}
-		
+	}
+	else if (state == HermitState::BULLETFIRE)
+	{
+		if (TIMER->GetTick(animdelay, 1.2f));
+		if (TIMER->GetTick(animdelay, 1.2f) and hp < 300)
+		{
+			state = HermitState::DEPLOY_CANNON;
+			deploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+		}
 	}
 	else if (state == HermitState::WALK_CANNON)
 	{
@@ -139,7 +156,7 @@ void Hermit::Update()
 			walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
 	}
-
+	
 
 
 
