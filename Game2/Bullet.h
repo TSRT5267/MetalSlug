@@ -3,6 +3,7 @@ class Bullet : public GameObject
 {
 private:
 	ObImage* image;
+	ObImage* effect;	
 	ObRect* col;
 
 	float life;
@@ -19,5 +20,6 @@ public:
 	void Fire(ObImage* Gun);
 	bool Getisfire() { return isfire; }
 	ObRect* GetPos() { return col; };
-	void Hit() { isfire = false; };
+	void Hit();
+	
 };

@@ -8,6 +8,11 @@ Bullet::Bullet()
 	image->scale.y = image->imageSize.y * 1.0f;
 	image->maxFrame.x = 17;
 
+	effect = new ObImage(L"slug/bulletEF.gif");
+	effect->scale.x = effect->imageSize.x * 1.0f / 10.0f;
+	effect->scale.y = effect->imageSize.y * 1.0f;
+	effect->maxFrame.x = 10;
+
 	col = new ObRect();
 	col->scale = image->scale;
 	col->scale -= Vector2(30, 30);
@@ -60,6 +65,16 @@ void Bullet::Fire(ObImage* Gun)
 	
 	image->frame.x = Gun->frame.x;
 
+}
+
+void Bullet::Hit()
+{
+
+	effect->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
+
+
+
+	isfire = false;
 }
 
 
