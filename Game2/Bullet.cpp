@@ -9,8 +9,8 @@ Bullet::Bullet()
 	image->maxFrame.x = 17;
 
 	effect = new ObImage(L"slug/bulletEF.gif");
-	effect->scale.x = effect->imageSize.x * 1.0f / 10.0f;
-	effect->scale.y = effect->imageSize.y * 1.0f;
+	effect->scale.x = effect->imageSize.x * 2.0f / 10.0f;
+	effect->scale.y = effect->imageSize.y * 2.0f;
 	effect->maxFrame.x = 10;
 
 	col = new ObRect();
@@ -19,16 +19,20 @@ Bullet::Bullet()
 	col->isFilled = false;
 	//col->color = Vector4(0, 0, 0, 0);
 	isfire = false;
+	ishit = false;
 	life = 0.0f;
 
 	image->SetParentRT(*col);
+	effect->SetParentRT(*col);
 }
 
 Bullet::~Bullet()
 {
 	delete image;
+	delete effect;
 	delete col;
 	TEXTURE->DeleteTexture(L"slug/bullet.gif.gif");
+	TEXTURE->DeleteTexture(L"slug/bulletEF.gif.gif");
 }
 
 void Bullet::Init()
@@ -42,7 +46,10 @@ void Bullet::Update()
 
 	col->MoveWorldPos(firedir * DELTA * 800);
 	image->Update();
+	effect->Update();
 	col->Update();
+
+
 
 	life -= DELTA;
 	if (life < 0) isfire = false;
@@ -50,6 +57,7 @@ void Bullet::Update()
 
 void Bullet::Render()
 {
+	if(ishit) effect->Render();
 	if (not isfire) return;
 	image->Render();
 	col->Render();
@@ -58,7 +66,7 @@ void Bullet::Render()
 void Bullet::Fire(ObImage* Gun)
 {
 	isfire = true;
-	life = 2.0f;
+	life = 5.0f;
 	float dig = (180.0f - 180.0f / 16.0f * Gun->frame.x) * ToRadian;
 	firedir = Vector2(cosf(dig),sinf(dig));	
 	col->SetWorldPos(Gun->GetWorldPos()+firedir*60);
@@ -69,7 +77,7 @@ void Bullet::Fire(ObImage* Gun)
 
 void Bullet::Hit()
 {
-
+	ishit = true;
 	effect->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 
 

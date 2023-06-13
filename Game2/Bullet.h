@@ -8,6 +8,7 @@ private:
 
 	float life;
 	bool isfire;
+	bool ishit;
 	Vector2 firedir;
 
 public:
