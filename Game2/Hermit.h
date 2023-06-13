@@ -25,6 +25,16 @@ private:
 	ObImage* cannonfire;
 	ObImage* destroyed;
 
+	ObImage* bullet1;
+	ObImage* bullet2;
+	ObImage* bulletEF[100];
+	ObImage* cannon;
+	float gravity;
+	bool isfire[3];
+	float life[3];
+	Vector2 firedir[3];
+	
+
 	HermitState state;
 	float animdelay;
 	int hp;
@@ -37,6 +47,8 @@ public:
 	void Update();
 	void Render();
 
+	void firebullet();
+	void firecannon();
 	void Hit(int Damage) { hp -= Damage; };
 
 	ObRect* GetPos() { return col; };
