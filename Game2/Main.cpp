@@ -47,8 +47,11 @@ void Main::Release()
 void Main::Update()
 {
 	ImGui::Text("hermitHP: %i\n",hermit->GetHP() );
+	ImGui::Text("hermitstate: %i\n", hermit->Getstate() );
+	 
+	
 
-	if (not gameover) CAM->position += RIGHT * 100.0f * DELTA;
+	//if (not gameover) CAM->position += RIGHT * 100.0f * DELTA;
 
 	map->Update();
 	slug->Update();
@@ -114,7 +117,7 @@ void Main::LateUpdate()
 				slug->Getbullet(i)->GetPos()->Intersect(hermit->GetPosT()))
 			{
 				//ÃÑÀº 1µ¥¹ÌÁö
-				hermit->Hit(1);
+				hermit->Hit(10);
 				slug->Getbullet(i)->Hit();
 			}
 		}		

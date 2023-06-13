@@ -77,6 +77,9 @@ Hermit::Hermit()
 	walk_cannon->SetParentRT(*col);
 	deploy_cannon->SetParentRT(*col);
 	undeploy_cannon->SetParentRT(*col);
+	bulletfire->SetParentRT(*col);
+	cannonfire->SetParentRT(*col);
+	destroyed->SetParentRT(*col);
 	colT->SetParentRT(*col);
 }
 
@@ -114,36 +117,43 @@ void Hermit::Update()
 	//WALK·Î ½ÃÀÛ
 	if (state == HermitState::WALK)
 	{
-		if (TIMER->GetTick(animdelay, 1.2f) and hp < 580)
-			if (TIMER->GetTick(animdelay, 1.2f) and hp<580)
-			{
-				state = HermitState::BULLETFIRE;
-				bulletfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-			}
-	}
-	else if (state == HermitState::BULLETFIRE)
-	{
-		if (TIMER->GetTick(animdelay, 1.2f));
-		if (TIMER->GetTick(animdelay, 1.2f) and hp < 300)
+
+		if (walk->frame.x == 11 and hp < 300)
 		{
+			walk->frame.x = 0;
 			state = HermitState::DEPLOY_CANNON;
 			deploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 		}
+		if (walk->frame.x==11 and hp<590)
+		{
+			walk->frame.x = 0;
+			state = HermitState::BULLETFIRE;
+			bulletfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
+		
 	}
 	else if (state == HermitState::WALK_CANNON)
 	{
 		
-			if (INPUT->KeyDown('W'))
-			{
-				state = HermitState::UNDEPLOY_CANNON;
-				undeploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
-			}
+		if (walk_cannon->frame.x==11 and hp<0)
+		{
+			walk_cannon->frame.x = 0;
+			state = HermitState::DESTROYED;
+			destroyed->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
+		if (walk_cannon->frame.x == 11 )
+		{
+			walk_cannon->frame.x = 0;
+			state = HermitState::CANNONFIRE;
+			cannonfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
 		
 	}
 	else if (state == HermitState::DEPLOY_CANNON)
 	{
-		if (TIMER->GetTick(animdelay, 1.2f))
+		if (deploy_cannon->frame.x==11)
 		{
+			deploy_cannon->frame.x = 0;
 			state = HermitState::WALK_CANNON;
 			walk_cannon->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
@@ -156,11 +166,38 @@ void Hermit::Update()
 			walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
 	}
-	
+	else if (state == HermitState::CANNONFIRE)
+	{
+		
+		
+		if (cannonfire->frame.x == 11 )
+		{
+			cannonfire->frame.x = 0;
+			state = HermitState::WALK_CANNON;
+			walk_cannon->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
+
+	}
+	else if (state == HermitState::BULLETFIRE)
+	{
+		
+		
+		if ( bulletfire->frame.x==11)
+		{
+			bulletfire->frame.x = 0;
+			state = HermitState::WALK;
+			walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
+	}
+	else if (state == HermitState::DESTROYED)
+	{
 
 
+		
+	}
 
-	col->MoveWorldPos(RIGHT * 100 * DELTA);
+
+	//col->MoveWorldPos(RIGHT * 100 * DELTA);
 
 	col->Update();
 	colT->Update();
@@ -169,6 +206,9 @@ void Hermit::Update()
 	walk_cannon->Update();
 	deploy_cannon->Update();
 	undeploy_cannon->Update();
+	bulletfire->Update();
+	cannonfire->Update();
+	destroyed->Update();
 }
 
 void Hermit::Render()

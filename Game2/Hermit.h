@@ -42,6 +42,7 @@ public:
 	ObRect* GetPos() { return col; };
 	ObRect* GetPosT() { return colT; };
 	int GetHP() { return hp; }
+	HermitState Getstate() { return state; };
 	
 };
 

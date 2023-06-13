@@ -131,7 +131,7 @@ void Slug::Update()
 			drive->ChangeAnim(ANIMSTATE::REVERSE_LOOP, 0.05f);
 		}
 		//drive(<-)
-		if (INPUT->KeyPress(VK_LEFT))
+		else if (INPUT->KeyPress(VK_LEFT))
 		{
 			state = SlugState::DRIVE;
 			drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
@@ -162,14 +162,15 @@ void Slug::Update()
 			col->MoveWorldPos(UP);
 			jump->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
 		}
-		if (INPUT->KeyUp(VK_RIGHT))
-		{
-			state = SlugState::IDLE;
-		}
 		if (INPUT->KeyUp(VK_LEFT))
 		{
 			state = SlugState::IDLE;
 		}
+		else if (INPUT->KeyUp(VK_RIGHT))
+		{
+			state = SlugState::IDLE;
+		}
+		
 		if (INPUT->KeyDown(VK_DOWN))
 		{
 			state = SlugState::CROUCH;						
@@ -269,17 +270,16 @@ void Slug::Update()
 		}
 	}
 	
-
 	//슬러그이동
-	if (INPUT->KeyPress(VK_RIGHT))
-	{
-		GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
-		//CAM->position += RIGHT * 300.0f * DELTA;
-	}
 	if (INPUT->KeyPress(VK_LEFT))
 	{
 		GetPos()->MoveWorldPos(LEFT * 300.0f * DELTA);
 		//CAM->position += LEFT * 300.0f * DELTA;
+	}
+	if (INPUT->KeyPress(VK_RIGHT))
+	{
+		GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
+		//CAM->position += RIGHT * 300.0f * DELTA;
 	}
 
 	//총구회전
