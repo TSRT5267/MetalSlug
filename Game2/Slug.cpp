@@ -273,12 +273,12 @@ void Slug::Update()
 	//슬러그이동
 	if (INPUT->KeyPress(VK_LEFT))
 	{
-		GetPos()->MoveWorldPos(LEFT * 300.0f * DELTA);
+		col->MoveWorldPos(LEFT * 300.0f * DELTA);
 		//CAM->position += LEFT * 300.0f * DELTA;
 	}
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
-		GetPos()->MoveWorldPos(RIGHT * 300.0f * DELTA);
+		col->MoveWorldPos(RIGHT * 300.0f * DELTA);
 		//CAM->position += RIGHT * 300.0f * DELTA;
 	}
 
@@ -333,7 +333,7 @@ void Slug::Update()
 
 	gravity += 500.0f * DELTA;
 	col->MoveWorldPos(DOWN * gravity * DELTA);
-	col->scale.x -= 20;	
+	col->scale -= Vector2(20,20);	
 	
 	col->	Update();
 	colb->	Update();

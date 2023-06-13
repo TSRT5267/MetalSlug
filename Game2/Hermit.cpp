@@ -56,19 +56,13 @@ Hermit::Hermit()
 		wave->SetLocalPos(Vector2(80, -40));
 		wave->pivot = OFFSET_B;
 
-		bullet1 = new ObImage(L"hermit/bullet.gif");
-		bullet1->scale.x = bullet1->imageSize.x * 2.0f / 4.0f;
-		bullet1->scale.y = bullet1->imageSize.y * 2.0f;
-		bullet1->maxFrame.x = 4;
-		bullet1->SetLocalPos(Vector2(40, 340));
-		bullet1->pivot = OFFSET_B;
-
-		bullet2 = new ObImage(L"hermit/bullet.gif");
-		bullet2->scale.x = bullet2->imageSize.x * 2.0f / 4.0f;
-		bullet2->scale.y = bullet2->imageSize.y * 2.0f;
-		bullet2->maxFrame.x = 4;
-		bullet2->SetLocalPos(Vector2(-90, 360));
-		bullet2->pivot = OFFSET_B;
+		for (int i = 0;i < 2;i++)
+		{
+			bullet[i] = new ObImage(L"hermit/bullet.gif");
+			bullet[i]->scale.x = bullet[i]->imageSize.x * 2.0f / 4.0f;
+			bullet[i]->scale.y = bullet[i]->imageSize.y * 2.0f;
+			bullet[i]->maxFrame.x = 4;
+		}		
 	}
 
 	col = new ObRect();
@@ -86,6 +80,14 @@ Hermit::Hermit()
 	colT->isFilled = false;
 	colT->pivot = OFFSET_B;
 
+	for (int i = 0;i < 2;i++)
+	{
+		bulletcol[i] = new ObCircle();
+		bulletcol[i]->scale = bullet[i]->scale;
+		bulletcol[i]->scale -= Vector2(10,10);
+		bulletcol[i]->isFilled = false;	
+	}
+
 	walk->SetParentRT(*col);
 	wave->SetParentRT(*col);
 	walk_cannon->SetParentRT(*col);
@@ -95,8 +97,12 @@ Hermit::Hermit()
 	cannonfire->SetParentRT(*col);
 	destroyed->SetParentRT(*col);
 	colT->SetParentRT(*col);
-	bullet1->SetParentRT(*col);
-	bullet2->SetParentRT(*col);
+	for (int i = 0;i < 2;i++)
+	{
+		bulletcol[i]->SetParentRT(*col);
+		bullet[i]->SetParentRT(*bulletcol[i]);
+	}
+	
 }
 
 Hermit::~Hermit()
@@ -109,8 +115,12 @@ Hermit::~Hermit()
 	delete bulletfire;
 	delete cannonfire;
 	delete destroyed;
-	delete bullet1;
-	delete bullet2;
+	for (int i = 0;i < 2;i++)
+	{
+		delete bullet[i];
+		delete bulletcol[i];
+	}
+	
 
 	TEXTURE->DeleteTexture(L"hermit/walk.gif");
 	TEXTURE->DeleteTexture(L"hermit/walk_cannon.gif");
@@ -143,34 +153,35 @@ void Hermit::Update()
 			state = HermitState::DEPLOY_CANNON;
 			deploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 		}
-		if (walk->frame.x==11 and hp<590)
+		if (walk->frame.x == 11 and hp < 590)
 		{
 			walk->frame.x = 0;
+			firebullet();
 			state = HermitState::BULLETFIRE;
 			bulletfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
-		
+
 	}
 	else if (state == HermitState::WALK_CANNON)
 	{
-		
-		if (walk_cannon->frame.x==11 and hp<=0)
+
+		if (walk_cannon->frame.x == 11 and hp <= 0)
 		{
 			walk_cannon->frame.x = 0;
 			state = HermitState::DESTROYED;
 			destroyed->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
-		if (walk_cannon->frame.x == 11 )
+		if (walk_cannon->frame.x == 11)
 		{
 			walk_cannon->frame.x = 0;
 			state = HermitState::CANNONFIRE;
 			cannonfire->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
-		
+
 	}
 	else if (state == HermitState::DEPLOY_CANNON)
 	{
-		if (deploy_cannon->frame.x==11)
+		if (deploy_cannon->frame.x == 11)
 		{
 			deploy_cannon->frame.x = 0;
 			state = HermitState::WALK_CANNON;
@@ -187,9 +198,9 @@ void Hermit::Update()
 	}
 	else if (state == HermitState::CANNONFIRE)
 	{
-		
-		
-		if (cannonfire->frame.x == 11 )
+
+
+		if (cannonfire->frame.x == 11)
 		{
 			cannonfire->frame.x = 0;
 			state = HermitState::WALK_CANNON;
@@ -200,8 +211,8 @@ void Hermit::Update()
 	else if (state == HermitState::BULLETFIRE)
 	{
 		
-		
-		if ( bulletfire->frame.x==11)
+
+		if (bulletfire->frame.x == 11)
 		{
 			bulletfire->frame.x = 0;
 			state = HermitState::WALK;
@@ -212,16 +223,29 @@ void Hermit::Update()
 	{
 
 
-		
+
 	}
 
 	//col->MoveWorldPos(RIGHT * 100 * DELTA);
 
 	//발사체이동
-	gravity += 500 * DELTA;
-	bullet1->MoveWorldPos(firedir[0] * DELTA * 500);
-	bullet2->MoveWorldPos(firedir[0] * DELTA * 500);
+	{
+		for (int i = 0;i < 2;i++)
+		{
+			if(isfire[i])
+			{
+				gravity[i] += DOWN * 100 * DELTA;
+				bulletcol[i]->MoveWorldPos(firedir[i] + gravity[i] * DELTA * 5);
+				life[i] -= DELTA;
+				if (life[i] <= 0) isfire[i] = false;
+			}
+			
+		}
+	
+	
 
+	
+	}
 
 	col->Update();
 	colT->Update();
@@ -233,8 +257,11 @@ void Hermit::Update()
 	bulletfire->Update();
 	cannonfire->Update();
 	destroyed->Update();
-	bullet1->Update();
-	bullet2->Update();
+	for (int i = 0;i < 2;i++)
+	{
+		bullet[i]->Update();
+		bulletcol[i]->Update();
+	}
 }
 
 void Hermit::Render()
@@ -268,23 +295,33 @@ void Hermit::Render()
 	}
 
 	wave->Render();
-	bullet1->Render();
-	bullet2->Render();
+	for (int i = 0;i < 2;i++)
+	{
+		if (isfire[i])
+		{
+			bulletcol[i]->Render();
+			bullet[i]->Render();
+		}		
+	}
+			
 }
 
 void Hermit::firebullet()
 {
-	isfire[0] = true;
-	isfire[1] = true;
-	life[0] = 3;
-	life[1] = 3;
-	firedir[0] = Vector2(4,3);
-	firedir[1] = Vector2(1,1);
+	for (int i = 0;i < 2;i++)
+	{
+		isfire[i] = true;
+		life[i] = 3;
+		bullet[i]->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		gravity[i] = Vector2(0,0);
+	}
+	
+	firedir[0] = Vector2(RANDOM->Float(0.2, 0.4),0.2);
+	firedir[1] = Vector2(RANDOM->Float(0.1, 0.3),0.2);
 
-	bullet1->SetWorldPos(col->GetWorldPos() + Vector2(40, 340));
-	bullet2->SetWorldPos(col->GetWorldPos() + Vector2(-90, 360));
-	bullet1->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
-	bullet2->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+	bulletcol[0]->SetWorldPos(col->GetWorldPos() + Vector2(40, 340));
+	bulletcol[1]->SetWorldPos(col->GetWorldPos() + Vector2(-90, 360));
+	
 }
 
 void Hermit::firecannon()

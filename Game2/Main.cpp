@@ -66,7 +66,9 @@ void Main::Update()
 
 void Main::LateUpdate()
 {	
-		
+	//게임클리어 조건
+	if (hermit->GetHP() < 0) gameover = true;
+	//떨어짐
 	if (slug->GetPos()->GetWorldPos().y<-400.0f)
 	{
 		slug->OnFloor();
@@ -107,8 +109,7 @@ void Main::LateUpdate()
 		}
 	}
 	
-	//플레이어 공격
-	if (hermit->GetHP() < 0) gameover = true;
+	//플레이어의 공격
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		if (slug->Getbullet(i)->Getisfire())
@@ -122,6 +123,13 @@ void Main::LateUpdate()
 			}
 		}		
 	}
+
+	//보스의 공격
+	if (hermit->Getbullet(0)->Intersect(slug->GetPos()))
+	{
+		slug->GetPos()->color = Vector4(1, 0, 0, 1);
+	}
+
 	map->LateUpdate();
 }
 

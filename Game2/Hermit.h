@@ -25,11 +25,11 @@ private:
 	ObImage* cannonfire;
 	ObImage* destroyed;
 
-	ObImage* bullet1;
-	ObImage* bullet2;
+	ObImage* bullet[2];
+	ObCircle*	bulletcol[2];
 	ObImage* bulletEF[100];
 	ObImage* cannon;
-	float gravity;
+	Vector2 gravity[3];
 	bool isfire[3];
 	float life[3];
 	Vector2 firedir[3];
@@ -55,6 +55,6 @@ public:
 	ObRect* GetPosT() { return colT; };
 	int GetHP() { return hp; }
 	HermitState Getstate() { return state; };
-	
+	ObCircle* Getbullet(int n) { return bulletcol[n]; };
 };
 
