@@ -9,9 +9,9 @@ Bullet::Bullet()
 	image->maxFrame.x = 17;
 
 	effect = new ObImage(L"slug/bulletEF.gif");
-	effect->scale.x = effect->imageSize.x * 2.0f / 10.0f;
-	effect->scale.y = effect->imageSize.y * 2.0f;
-	effect->maxFrame.x = 10;
+	effect->scale.x = effect->imageSize.x * 2.5f / 11.0f;
+	effect->scale.y = effect->imageSize.y * 2.5f;
+	effect->maxFrame.x = 11;
 
 	col = new ObRect();
 	col->scale = image->scale;
@@ -41,23 +41,24 @@ void Bullet::Init()
 
 void Bullet::Update()
 {
+
+	if (ishit) effect->Update();
+	if (effect->frame.x == 10) ishit = false;
 	if (not isfire) return;
 
 
 	col->MoveWorldPos(firedir * DELTA * 800);
 	image->Update();
-	effect->Update();
 	col->Update();
-
-
 
 	life -= DELTA;
 	if (life < 0) isfire = false;
+
 }
 
 void Bullet::Render()
 {
-	if(ishit) effect->Render();
+	if (ishit) effect->Render();
 	if (not isfire) return;
 	image->Render();
 	col->Render();
@@ -78,10 +79,8 @@ void Bullet::Fire(ObImage* Gun)
 void Bullet::Hit()
 {
 	ishit = true;
+	effect->frame.x = 0;
 	effect->ChangeAnim(ANIMSTATE::ONCE, 0.05f);
-
-
-
 	isfire = false;
 }
 

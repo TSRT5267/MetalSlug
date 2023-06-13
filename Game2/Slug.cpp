@@ -318,7 +318,7 @@ void Slug::Update()
 		{			
 			for (int i = 0; i < BULLETMAX; i++)
 			{
-				if (not bullet[i]->Getisfire())
+				if (not (bullet[i]->Getisfire() or bullet[i]->Getishit()))
 				{
 					bullet[i]->Fire(gun);
 					break;

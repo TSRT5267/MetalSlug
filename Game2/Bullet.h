@@ -20,6 +20,7 @@ public:
 
 	void Fire(ObImage* Gun);
 	bool Getisfire() { return isfire; }
+	bool Getishit() { return ishit; }
 	ObRect* GetPos() { return col; };
 	void Hit();
 	
