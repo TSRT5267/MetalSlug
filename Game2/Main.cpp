@@ -118,7 +118,7 @@ void Main::LateUpdate()
 				slug->Getbullet(i)->GetPos()->Intersect(hermit->GetPosT()))
 			{
 				//ÃÑÀº 1µ¥¹ÌÁö
-				hermit->Hit(10);
+				hermit->Hit(100);
 				slug->Getbullet(i)->Hit();
 			}
 		}		

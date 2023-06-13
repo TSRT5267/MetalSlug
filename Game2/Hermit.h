@@ -25,10 +25,9 @@ private:
 	ObImage* cannonfire;
 	ObImage* destroyed;
 
-	ObImage* bullet[2];
-	ObCircle*	bulletcol[2];
+	ObImage* bullet[3];
+	ObCircle*	bulletcol[3];
 	ObImage* bulletEF[100];
-	ObImage* cannon;
 	Vector2 gravity[3];
 	bool isfire[3];
 	float life[3];

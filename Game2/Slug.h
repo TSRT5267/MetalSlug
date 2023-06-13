@@ -32,7 +32,7 @@ private:
 	class Bullet* bullet[BULLETMAX];
 	//ObImage* cannon;
 	
-	
+	int hp;
 
 	SlugState state;
 	float gravity;

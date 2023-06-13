@@ -17,6 +17,7 @@ Bullet::Bullet()
 	col->scale = image->scale;
 	col->scale -= Vector2(30, 30);
 	col->isFilled = false;
+	col->SetWorldPos(Vector2(0, 1000));
 	//col->color = Vector4(0, 0, 0, 0);
 	isfire = false;
 	ishit = false;
