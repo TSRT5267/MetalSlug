@@ -104,6 +104,15 @@ void Main::LateUpdate()
 				ground[i]->active = false;
 
 			}
+			//Çã¹ÔºÒ¸´
+			if (ground[i]->col->Intersect(hermit->Getbullet(0)))
+			{
+				hermit->Setisfire(0, false);
+			}
+			if (ground[i]->col->Intersect(hermit->Getbullet(1)))
+			{
+				hermit->Setisfire(1, false);
+			}
 			//Çã¹ÔÄ³³í
 			if (ground[i]->col->Intersect(hermit->Getbullet(2)))
 			{
@@ -136,6 +145,7 @@ void Main::LateUpdate()
 			//slug->GetPos()->color = Vector4(1, 0, 0, 1);
 			slug->Hit();
 		}
+		
 	}
 	
 
