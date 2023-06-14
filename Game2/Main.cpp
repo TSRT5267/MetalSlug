@@ -48,10 +48,16 @@ void Main::Update()
 {
 	ImGui::Text("hermitHP: %i\n",hermit->GetHP() );
 	ImGui::Text("hermitstate: %i\n", hermit->Getstate() );
-	 
-	
+	ImGui::Text("hp: %i\n", slug->GetHP() );
 
-	if (not gameover) CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
+	//게임끝 조건
+	if (hermit->GetHP() <= 0 or slug->GetHP() <=0) gameover = true;
+
+	if (not gameover)
+	{
+		hermit->GetPos()->MoveWorldPos(RIGHT * 100 * DELTA);
+		CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
+	}
 
 	map->Update();
 	slug->Update();
@@ -66,17 +72,19 @@ void Main::Update()
 
 void Main::LateUpdate()
 {	
-	//게임클리어 조건
-	if (hermit->GetHP() < 0) gameover = true;
+	
+	
+
+
 	//떨어짐
 	if (slug->GetPos()->GetWorldPos().y<-400.0f)
 	{
 		slug->OnFloor();
+		slug->Hit();
 		for (int i = 0; i < GROUNDMAX; i++)
 		{
 			ground[i]->active = true;
 		}
-		score = 0;
 	}
 		
 	
@@ -94,8 +102,7 @@ void Main::LateUpdate()
 			// 충돌 (슬러그)
 			if (ground[i]->col->Intersect(slug->Getbottom()))
 			{
-				slug->OnFloor();
-				slug->Hit();
+				slug->OnFloor();			
 				//slug->color = Vector4(1, 1, 1, 1);
 			}
 			// 충돌 (허밋)

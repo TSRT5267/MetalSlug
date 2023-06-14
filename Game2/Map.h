@@ -1,5 +1,5 @@
 #pragma once
-#define SEAMAX 15
+#define SEAMAX 20
 
 class Map
 {

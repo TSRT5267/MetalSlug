@@ -68,12 +68,12 @@ void Map::Init()
 {	
 	for (int i = 0; i < SEAMAX; i++)
 	{
-		sea1[i]->SetWorldPos(Vector2(-1280.0 + 288.0f * i, -288.0f));
-		sea2[i]->SetWorldPos(Vector2(-1280.0 + 256.0f * i, -320.0f));
+		sea1[i]->SetWorldPos(Vector2(-1400.0 + 288.0f * i, -288.0f));
+		sea2[i]->SetWorldPos(Vector2(-1400.0 + 256.0f * i, -320.0f));
+
+
+
 	}
-
-	
-
 }
 
 void Map::InitFish(Vector2 spwan)
@@ -127,11 +127,11 @@ void Map::LateUpdate()
 {
 	for (int i = 0;i < SEAMAX;i++)
 	{
-		if (CAM->position.x - sea1[i]->GetWorldPos().x > 800.0f)
+		if (CAM->position.x - sea1[i]->GetWorldPos().x > 1200.0f)
 		{
 			sea1[i]->SetWorldPos(Vector2(sea1[i]->GetWorldPos().x+1856.0f , -288.0f));			
 		}
-		if (CAM->position.x - sea2[i]->GetWorldPos().x > 800.0f)
+		if (CAM->position.x - sea2[i]->GetWorldPos().x > 1200.0f)
 		{			
 			sea2[i]->SetWorldPos(Vector2(sea2[i]->GetWorldPos().x + 1792.0f, -320.0f));
 		}

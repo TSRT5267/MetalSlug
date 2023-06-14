@@ -141,7 +141,7 @@ void Slug::Update()
 			drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 		}
 		//jump
-		if (INPUT->KeyPress('X'))
+		if (INPUT->KeyPress('X') )
 		{
 			state = SlugState::JUMP;
 			gravity = -300.0f;
@@ -332,7 +332,7 @@ void Slug::Update()
 	}
 	
 	
-
+	if (damagedelay > 0.0f) damagedelay -= DELTA;	
 
 
 	gravity += 500.0f * DELTA;
@@ -355,6 +355,15 @@ void Slug::Update()
 }
 
 
+
+void Slug::Hit()
+{
+	if (damagedelay <= 0.0f)
+	{
+		hp--;
+		damagedelay = 3.0f;
+	}
+}
 
 void Slug::OnFloor()
 {		

@@ -233,7 +233,7 @@ void Hermit::Update()
 
 	}
 
-	col->MoveWorldPos(RIGHT * 100 * DELTA);
+	
 
 	//발사체이동
 	{

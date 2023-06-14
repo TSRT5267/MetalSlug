@@ -30,7 +30,8 @@ private:
 	
 	ObImage* gun;
 	class Bullet* bullet[BULLETMAX];
-	//ObImage* cannon;
+	ObImage* cannon;
+	ObRect* cannoncol;
 	
 	int hp;
 
@@ -39,6 +40,7 @@ private:
 	float animdelay;
 	float turndelay;
 	float firedelay;
+	float damagedelay;
 
 public:
 	
@@ -49,13 +51,13 @@ public:
 	void Update();	
 	void Render();
 
-	void Hit() { hp--; };
+	void Hit() ;
 	void OnFloor();
 
 	SlugState Getstate() { return state; };
 	ObRect* GetPos() { return col; };
 	ObRect* Getbottom() { return colb; };
 	Bullet* Getbullet(int i) { return bullet[i]; };
-		
+	int GetHP() { return hp; };
 };
 
