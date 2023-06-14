@@ -34,6 +34,7 @@ private:
 	ObRect* cannoncol;
 	
 	int hp;
+	int bomb;
 
 	SlugState state;
 	float gravity;

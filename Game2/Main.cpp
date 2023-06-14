@@ -8,6 +8,8 @@
 
 Main::Main()
 {
+	time = 60;
+
 	slug = new Slug();
 	map = new Map();
 	hermit = new Hermit();
@@ -50,6 +52,8 @@ void Main::Update()
 	ImGui::Text("hermitstate: %i\n", hermit->Getstate() );
 	ImGui::Text("hp: %i\n", slug->GetHP() );
 
+	time -= DELTA*0.5f;
+	
 	//게임끝 조건
 	if (hermit->GetHP() <= 0 or slug->GetHP() <=0) gameover = true;
 
@@ -67,7 +71,7 @@ void Main::Update()
 		ground[i]->Update();
 	}
 
-	score += 10 * DELTA;
+	
 }
 
 void Main::LateUpdate()
@@ -139,6 +143,7 @@ void Main::LateUpdate()
 			{
 				//총은 1데미지
 				hermit->Hit(100);
+				score += 100;
 				slug->Getbullet(i)->Hit();
 			}
 		}		

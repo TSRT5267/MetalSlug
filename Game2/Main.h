@@ -10,7 +10,8 @@ private:
 	class Ground* ground[GROUNDMAX];
 
 	bool gameover;
-	float score;
+	int score;
+	float time;
 
 public:
 	Main();
