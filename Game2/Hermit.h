@@ -49,6 +49,7 @@ public:
 	void firebullet();
 	void firecannon();
 	void Hit(int Damage) { hp -= Damage; };
+	void spawn();
 
 	ObRect* GetPos() { return col; };
 	ObRect* GetPosT() { return colT; };

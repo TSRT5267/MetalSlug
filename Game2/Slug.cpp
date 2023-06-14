@@ -451,7 +451,7 @@ void Slug::Shoot()
 {	
 		isfire = true;
 		cannonC--;
-		cannonlife = 3;
+		cannonlife = 2;
 		cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 		cannonG = Vector2(0, 0);
 		cannondir = Vector2(-50, 20);

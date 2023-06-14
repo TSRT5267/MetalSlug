@@ -9,7 +9,7 @@
 Main::Main()
 {
 	time = 60;
-
+	gamestart = false;
 	slug = new Slug();
 	map = new Map();
 	hermit = new Hermit();
@@ -40,6 +40,7 @@ void Main::Init()
 	{
 		ground[i]->Init(Vector2(-1280.0 + 128.0f * i, -200.0f), true);
 	}
+	
 }
 
 void Main::Release()
@@ -51,6 +52,7 @@ void Main::Update()
 	ImGui::Text("hermitHP: %i\n", hermit->GetHP());
 	ImGui::Text("hermitstate: %i\n", hermit->Getstate());
 	ImGui::Text("hp: %i\n", slug->GetHP());
+	ImGui::Text("campos: %f  %f \n", CAM->position.x, CAM->position.y);
 	
 
 	//ui
@@ -62,12 +64,25 @@ void Main::Update()
 	map->Setscore(score);
 	}
 
+	//게임시작
+	{
+		
+		if (slug->GetPos()->GetWorldPos().x > 100.0f)
+		{
+			gamestart = true;
+			hermit->spawn();	
+		}
+		
+		
+
+	}
+
 	//게임끝 조건
 	if (hermit->GetHP() <= 0 or slug->GetHP() <=0) gameover = true;
 
 	if (not gameover)
 	{
-		hermit->GetPos()->MoveWorldPos(RIGHT * 100 * DELTA);
+		if(gamestart) hermit->GetPos()->MoveWorldPos(RIGHT * 100 * DELTA);
 		CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
 	}
 

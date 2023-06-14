@@ -141,7 +141,7 @@ Hermit::~Hermit()
 
 void Hermit::Init()
 {
-	col->SetWorldPos(Vector2(-480.0f, -280.0f));
+	col->SetWorldPos(Vector2(-480.0f, -280.0f));	
 	state = HermitState::WALK;
 	walk->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 	wave->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
@@ -354,6 +354,14 @@ void Hermit::firecannon()
 	bulletcol[1]->SetWorldPos(col->GetWorldPos() + Vector2(-110, 380));
 	bulletcol[2]->SetWorldPos(col->GetWorldPos() + Vector2(40, 260));
 
+}
+
+void Hermit::spawn()
+{
+	if (col->GetWorldPos().y < -280.0f)
+	{
+		col->MoveWorldPos(UP * DELTA * 50);		
+	}
 }
 
 

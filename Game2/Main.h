@@ -9,6 +9,7 @@ private:
 	class Map* map;
 	class Ground* ground[GROUNDMAX];
 
+	bool gamestart;
 	bool gameover;
 	int score;
 	float time;
