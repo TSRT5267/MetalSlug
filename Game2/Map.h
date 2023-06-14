@@ -14,7 +14,9 @@ private:
 
 	ObImage* time[2];
 	ObImage* inven;
-	
+	ObImage* hp;
+	ObImage* score[6];
+
 
 
 public:
