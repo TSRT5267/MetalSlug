@@ -55,6 +55,7 @@ public:
 	int GetHP() { return hp; }
 	HermitState Getstate() { return state; };
 	ObCircle* Getbullet(int n) { return bulletcol[n]; };
+	bool Getbulletstate(int n) { return isfire[n]; };
 
 	void Setisfire(int n, bool State) { isfire[n] = State; };
 };

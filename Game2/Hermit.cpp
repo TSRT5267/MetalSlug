@@ -89,10 +89,10 @@ Hermit::Hermit()
 	{
 		bulletcol[i] = new ObCircle();
 		bulletcol[i]->scale = bullet[i]->scale;
-		bulletcol[i]->scale -= Vector2(10,10);
+		bulletcol[i]->scale -= Vector2(15,15);
 		bulletcol[i]->isFilled = false;	
 	}
-	bulletcol[2]->scale -= Vector2(10, 10);
+	bulletcol[2]->scale -= Vector2(15, 15);
 
 	walk->SetParentRT(*col);
 	wave->SetParentRT(*col);

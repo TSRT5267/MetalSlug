@@ -9,7 +9,8 @@ enum class SlugState
 	CROUCH,
 	CROUCH_IDLE,
 	CROUCH_DRIVE,
-	
+	SHOOTING,
+	CROUCH_SHOOTING,
 };
 
 
@@ -42,6 +43,7 @@ private:
 	float turndelay;
 	float firedelay;
 	float damagedelay;
+	float shootingdelay;
 
 public:
 	

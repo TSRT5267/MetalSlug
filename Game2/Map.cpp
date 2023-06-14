@@ -112,7 +112,9 @@ void Map::Update()
 	for (int i = 0;i < SEAMAX;i++)
 	{
 		sea1[i]->uv.x += DELTA * 100.0f / sea1[i]->imageSize.x;
-		sea1[i]->uv.z += DELTA * 100.0f / sea1[i]->imageSize.x;		
+		sea1[i]->uv.z += DELTA * 100.0f / sea1[i]->imageSize.x;	
+		sea2[i]->uv.x += DELTA * 100.0f / sea2[i]->imageSize.x;
+		sea2[i]->uv.z += DELTA * 100.0f / sea2[i]->imageSize.x;
 	}
 
 	
@@ -140,7 +142,7 @@ void Map::LateUpdate()
 		}
 		if (CAM->position.x - sea2[i]->GetWorldPos().x > 1200.0f)
 		{			
-			sea2[i]->SetWorldPos(Vector2(sea2[i]->GetWorldPos().x + 1792.0f, -320.0f));
+			sea2[i]->SetWorldPos(Vector2(sea2[i]->GetWorldPos().x + 2112.0f, -320.0f));
 		}
 	}
 		

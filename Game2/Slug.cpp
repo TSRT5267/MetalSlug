@@ -63,6 +63,7 @@ Slug::Slug()
 	col->scale = idle->scale;
 	col->isFilled = false;
 	col->pivot = OFFSET_RB;
+	col->pivot += Vector2(-0.1, 0);
 
 	colb = new ObRect();
 	colb->scale = idle->scale;
@@ -85,9 +86,11 @@ Slug::Slug()
 	idle->SetParentRT(*col);
 	drive->SetParentRT(*col);
 	jump->SetParentRT(*col);
+	shooting->SetParentRT(*col);
 	crouch->SetParentRT(*col);
 	crouch_idle->SetParentRT(*col);
 	crouch_drive->SetParentRT(*col);
+	crouch_shooting->SetParentRT(*col);
 	gun->SetParentRT(*col);
 	colb->SetParentRT(*col);
 	for (int i = 0; i < BULLETMAX; i++)
@@ -154,6 +157,12 @@ void Slug::Update()
 			state = SlugState::CROUCH;
 			crouch->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
+		//shooting
+		if (INPUT->KeyDown('C'))
+		{
+			state = SlugState::SHOOTING;
+			shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
+		}
 	}
 	else if (state == SlugState::DRIVE)
 	{
@@ -180,7 +189,11 @@ void Slug::Update()
 			state = SlugState::CROUCH;						
 			crouch->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
-
+		if (INPUT->KeyDown('C'))
+		{
+			state = SlugState::SHOOTING;
+			shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
+		}
 	}
 	else if (state == SlugState::JUMP)
 	{
@@ -234,6 +247,11 @@ void Slug::Update()
 		{
 			state = SlugState::IDLE;
 		}
+		if (INPUT->KeyDown('C'))
+		{
+			state = SlugState::CROUCH_SHOOTING;
+			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
+		}
 	}
 	else if (state == SlugState::CROUCH_IDLE)
 	{
@@ -255,6 +273,11 @@ void Slug::Update()
 			state = SlugState::CROUCH_DRIVE;
 			crouch_drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 		}
+		if (INPUT->KeyDown('C'))
+		{
+			state = SlugState::CROUCH_SHOOTING;
+			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
+		}
 	}
 	else if (state == SlugState::CROUCH_DRIVE)
 	{
@@ -272,18 +295,39 @@ void Slug::Update()
 		{
 			state = SlugState::CROUCH_IDLE;
 		}
+		if (INPUT->KeyDown('C'))
+		{
+			state = SlugState::CROUCH_SHOOTING;
+			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
+		}
+	}
+	else if (state == SlugState::SHOOTING)
+	{
+		col->scale = shooting->scale;
+		if (shooting->frame.x == 19)
+		{
+			state = SlugState::IDLE;
+			idle->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
+	}
+	else if (state == SlugState::CROUCH_SHOOTING)
+	{
+		col->scale = crouch_shooting->scale;
+		if (crouch_shooting->frame.x == 7)
+		{
+			state = SlugState::CROUCH_IDLE;
+			crouch_idle->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
+		}
 	}
 	
 	//슬러그이동
 	if (INPUT->KeyPress(VK_LEFT))
 	{
-		col->MoveWorldPos(LEFT * 300.0f * DELTA);
-		//CAM->position += LEFT * 300.0f * DELTA;
+		col->MoveWorldPos(LEFT * 400.0f * DELTA);		
 	}
 	if (INPUT->KeyPress(VK_RIGHT))
 	{
-		col->MoveWorldPos(RIGHT * 300.0f * DELTA);
-		//CAM->position += RIGHT * 300.0f * DELTA;
+		col->MoveWorldPos(RIGHT * 400.0f * DELTA);		
 	}
 
 	//총구회전
@@ -337,7 +381,8 @@ void Slug::Update()
 
 	gravity += 500.0f * DELTA;
 	col->MoveWorldPos(DOWN * gravity * DELTA);
-	col->scale -= Vector2(20,20);	
+	
+	col->scale -= Vector2(30,30);	
 	
 	col->	Update();
 	colb->	Update();
@@ -347,6 +392,8 @@ void Slug::Update()
 	crouch->Update();
 	crouch_idle->Update();
 	crouch_drive->Update();
+	shooting->Update();
+	crouch_shooting->Update();
 	gun->Update();
 	for (int i = 0; i < BULLETMAX; i++)
 	{
@@ -396,6 +443,12 @@ void Slug::Render()
 		break;
 	case SlugState::CROUCH_DRIVE:
 		crouch_drive->Render();
+		break;
+	case SlugState::SHOOTING:
+		shooting->Render();
+		break;
+	case SlugState::CROUCH_SHOOTING:
+		crouch_shooting->Render();
 		break;
 	}
 

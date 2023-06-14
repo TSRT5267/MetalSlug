@@ -154,8 +154,10 @@ void Main::LateUpdate()
 	{
 		if (hermit->Getbullet(i)->Intersect(slug->GetPos()))
 		{
-			//slug->GetPos()->color = Vector4(1, 0, 0, 1);
-			slug->Hit();
+			if (hermit->Getbulletstate(i) == true)
+			{
+				slug->Hit();
+			}
 		}
 		
 	}
