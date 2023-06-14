@@ -51,7 +51,7 @@ void Main::Update()
 	 
 	
 
-	//if (not gameover) CAM->position += RIGHT * 100.0f * DELTA;
+	if (not gameover) CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
 
 	map->Update();
 	slug->Update();
@@ -125,10 +125,14 @@ void Main::LateUpdate()
 	}
 
 	//보스의 공격
-	if (hermit->Getbullet(0)->Intersect(slug->GetPos()))
+	for (int i = 0;i < 3;i++)
 	{
-		slug->GetPos()->color = Vector4(1, 0, 0, 1);
+		if (hermit->Getbullet(i)->Intersect(slug->GetPos()))
+		{
+			slug->GetPos()->color = Vector4(1, 0, 0, 1);
+		}
 	}
+	
 
 	map->LateUpdate();
 }

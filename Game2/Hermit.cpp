@@ -103,8 +103,7 @@ Hermit::Hermit()
 	destroyed->SetParentRT(*col);
 	colT->SetParentRT(*col);
 	for (int i = 0;i < 3;i++)
-	{
-		bulletcol[i]->SetParentRT(*col);
+	{		
 		bullet[i]->SetParentRT(*bulletcol[i]);
 	}
 	
@@ -233,7 +232,7 @@ void Hermit::Update()
 
 	}
 
-	//col->MoveWorldPos(RIGHT * 100 * DELTA);
+	col->MoveWorldPos(RIGHT * 100 * DELTA);
 
 	//발사체이동
 	{
@@ -241,8 +240,8 @@ void Hermit::Update()
 		{
 			if(isfire[i])
 			{
-				gravity[i] += DOWN * 100 * DELTA;
-				bulletcol[i]->MoveWorldPos(firedir[i] + gravity[i] * DELTA * 5);
+				gravity[i] += DOWN * 70 * DELTA;
+				bulletcol[i]->MoveWorldPos((firedir[i] + gravity[i]) * DELTA*10 );
 				life[i] -= DELTA;
 				if (life[i] <= 0) isfire[i] = false;
 			}
@@ -251,8 +250,8 @@ void Hermit::Update()
 
 		if (isfire[2])
 		{
-			gravity[2] += DOWN * 200 * DELTA;
-			bulletcol[2]->MoveWorldPos(firedir[2] + gravity[2] * DELTA * 5);
+			gravity[2] += DOWN * 100 * DELTA;
+			bulletcol[2]->MoveWorldPos((firedir[2] + gravity[2]) * DELTA*10 );
 			life[2] -= DELTA;
 			if (life[2] <= 0) isfire[2] = false;
 		}
@@ -327,8 +326,8 @@ void Hermit::firebullet()
 		gravity[i] = Vector2(0,0);
 	}
 	
-	firedir[0] = Vector2(RANDOM->Float(0.2, 0.4),0.3);
-	firedir[1] = Vector2(RANDOM->Float(0.1, 0.3),0.3);
+	firedir[0] = Vector2(RANDOM->Float(50, 90),40);
+	firedir[1] = Vector2(RANDOM->Float(30, 70),40);
 
 	bulletcol[0]->SetWorldPos(col->GetWorldPos() + Vector2(40, 340));
 	bulletcol[1]->SetWorldPos(col->GetWorldPos() + Vector2(-90, 360));
@@ -344,11 +343,11 @@ void Hermit::firecannon()
 		bullet[i]->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		gravity[i] = Vector2(0, 0);
 	}
-	bullet[2]->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+	bullet[2]->ChangeAnim(ANIMSTATE::ONCE, 0.14f);
 
-	firedir[0] = Vector2(RANDOM->Float(0.2, 0.4), 0.3);
-	firedir[1] = Vector2(RANDOM->Float(0.1, 0.3), 0.3);
-	firedir[2] = Vector2(RANDOM->Float(0.2, 0.5), 0.2);
+	firedir[0] = Vector2(RANDOM->Float(50, 90), 30);
+	firedir[1] = Vector2(RANDOM->Float(30, 70), 30);
+	firedir[2] = Vector2(RANDOM->Float(70, 110), 30);
 
 	bulletcol[0]->SetWorldPos(col->GetWorldPos() + Vector2(60, 360));
 	bulletcol[1]->SetWorldPos(col->GetWorldPos() + Vector2(-110, 380));
