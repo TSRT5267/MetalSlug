@@ -86,27 +86,31 @@ void Main::LateUpdate()
 		//바닥이 화면 밖으로 벗어났을때 스폰
 		if (CAM->position.x - ground[i]->GetPosX() > 800.0f)
 		{
-			ground[i]->Init(Vector2(ground[i]->GetPosX() + 1536.0f, -200.0f),
-			RANDOM->Int(0, 5));
+			ground[i]->Init(Vector2(ground[i]->GetPosX() + 1536.0f, -200.0f),true);
 		}
-		// 충돌 (슬러그)
+		
 		if (ground[i]->active)
 		{
+			// 충돌 (슬러그)
 			if (ground[i]->col->Intersect(slug->Getbottom()))
 			{
 				slug->OnFloor();
+				slug->Hit();
 				//slug->color = Vector4(1, 1, 1, 1);
 			}
-		}
-		// 충돌 (허밋)
-		if (ground[i]->active)
-		{
+			// 충돌 (허밋)
 			if (ground[i]->col->Intersect(hermit->GetPos()))
 			{
 				ground[i]->active = false;
-				
+
+			}
+			//허밋캐논
+			if (ground[i]->col->Intersect(hermit->Getbullet(2)))
+			{
+				ground[i]->active = false;
 			}
 		}
+		
 	}
 	
 	//플레이어의 공격
@@ -129,7 +133,8 @@ void Main::LateUpdate()
 	{
 		if (hermit->Getbullet(i)->Intersect(slug->GetPos()))
 		{
-			slug->GetPos()->color = Vector4(1, 0, 0, 1);
+			//slug->GetPos()->color = Vector4(1, 0, 0, 1);
+			slug->Hit();
 		}
 	}
 	

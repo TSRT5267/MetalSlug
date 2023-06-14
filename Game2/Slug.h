@@ -49,7 +49,7 @@ public:
 	void Update();	
 	void Render();
 
-	
+	void Hit() { hp--; };
 	void OnFloor();
 
 	SlugState Getstate() { return state; };

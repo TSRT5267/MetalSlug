@@ -6,6 +6,8 @@
 
 Slug::Slug()
 {
+	hp = 4;
+
 	//Çàµ¿
 	{
 		idle = new ObImage(L"slug/idle.gif");
@@ -108,6 +110,8 @@ Slug::~Slug()
 	{
 		delete bullet[i];
 	}
+
+	TEXTURE->DeleteTexture(L"slug/idle.gif");
 }
 
 void Slug::Init()

@@ -92,6 +92,7 @@ Hermit::Hermit()
 		bulletcol[i]->scale -= Vector2(10,10);
 		bulletcol[i]->isFilled = false;	
 	}
+	bulletcol[2]->scale -= Vector2(10, 10);
 
 	walk->SetParentRT(*col);
 	wave->SetParentRT(*col);
@@ -250,7 +251,7 @@ void Hermit::Update()
 
 		if (isfire[2])
 		{
-			gravity[2] += DOWN * 100 * DELTA;
+			gravity[2] += DOWN * 200 * DELTA;
 			bulletcol[2]->MoveWorldPos((firedir[2] + gravity[2]) * DELTA*10 );
 			life[2] -= DELTA;
 			if (life[2] <= 0) isfire[2] = false;
@@ -326,7 +327,7 @@ void Hermit::firebullet()
 		gravity[i] = Vector2(0,0);
 	}
 	
-	firedir[0] = Vector2(RANDOM->Float(50, 90),40);
+	firedir[0] = Vector2(RANDOM->Float(50, 80),40);
 	firedir[1] = Vector2(RANDOM->Float(30, 70),40);
 
 	bulletcol[0]->SetWorldPos(col->GetWorldPos() + Vector2(40, 340));
@@ -343,11 +344,11 @@ void Hermit::firecannon()
 		bullet[i]->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		gravity[i] = Vector2(0, 0);
 	}
-	bullet[2]->ChangeAnim(ANIMSTATE::ONCE, 0.14f);
+	bullet[2]->ChangeAnim(ANIMSTATE::ONCE, 0.09f);
 
-	firedir[0] = Vector2(RANDOM->Float(50, 90), 30);
+	firedir[0] = Vector2(RANDOM->Float(50, 80), 30);
 	firedir[1] = Vector2(RANDOM->Float(30, 70), 30);
-	firedir[2] = Vector2(RANDOM->Float(70, 110), 30);
+	firedir[2] = Vector2(RANDOM->Float(60, 90), 30);
 
 	bulletcol[0]->SetWorldPos(col->GetWorldPos() + Vector2(60, 360));
 	bulletcol[1]->SetWorldPos(col->GetWorldPos() + Vector2(-110, 380));
