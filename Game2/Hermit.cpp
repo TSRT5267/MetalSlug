@@ -159,7 +159,7 @@ void Hermit::Update()
 			state = HermitState::DEPLOY_CANNON;
 			deploy_cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
 		}
-		if (walk->frame.x == 11 and hp < 590)
+		if (walk->frame.x == 11 and hp < 595)
 		{
 			walk->frame.x = 0;
 			firebullet();

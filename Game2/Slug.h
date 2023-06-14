@@ -68,7 +68,10 @@ public:
 	ObRect* Getbottom() { return colb; };
 	Bullet* Getbullet(int i) { return bullet[i]; };
 	ObRect* Getcannon() { return cannoncol; };
+	bool Getcannonfire() { return isfire; };
 	int GetcannonC() { return cannonC; };
 	int GetHP() { return hp; };
+
+	void cannonhit() { isfire = false; };
 };
 

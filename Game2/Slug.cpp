@@ -6,7 +6,7 @@
 
 Slug::Slug()
 {
-	hp = 4;
+	hp = 8;
 	cannonC = 10;
 	//Çàµ¿
 	{

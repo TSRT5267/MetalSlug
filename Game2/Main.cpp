@@ -48,12 +48,20 @@ void Main::Release()
 
 void Main::Update()
 {
-	ImGui::Text("hermitHP: %i\n",hermit->GetHP() );
-	ImGui::Text("hermitstate: %i\n", hermit->Getstate() );
-	ImGui::Text("hp: %i\n", slug->GetHP() );
-
-	time -= DELTA*0.5f;
+	ImGui::Text("hermitHP: %i\n", hermit->GetHP());
+	ImGui::Text("hermitstate: %i\n", hermit->Getstate());
+	ImGui::Text("hp: %i\n", slug->GetHP());
 	
+
+	//ui
+	{
+	time -= DELTA * 0.5f;
+	map->Settime(time);
+	map->Setcannon(slug->GetcannonC());
+	map->Sethp(slug->GetHP());
+	map->Setscore(score);
+	}
+
 	//게임끝 조건
 	if (hermit->GetHP() <= 0 or slug->GetHP() <=0) gameover = true;
 
@@ -134,7 +142,7 @@ void Main::LateUpdate()
 	}
 	
 	//플레이어의 공격
-	for (int i = 0; i < BULLETMAX; i++)
+	for (int i = 0; i < BULLETMAX; i++) //총
 	{
 		if (slug->Getbullet(i)->Getisfire())
 		{
@@ -148,7 +156,15 @@ void Main::LateUpdate()
 			}
 		}		
 	}
-
+	if (slug->Getcannonfire())
+	{
+		if (slug->Getcannon()->Intersect(hermit->GetPos()))
+		{
+			hermit->Hit(10);
+			score += 1000;
+			slug->cannonhit();
+		}
+	}
 	//보스의 공격
 	for (int i = 0;i < 3;i++)
 	{
