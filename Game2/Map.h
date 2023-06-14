@@ -8,7 +8,12 @@ private:
 	ObImage* sea1[SEAMAX];
 	ObImage* sea2[SEAMAX];
 	
+	
 
+
+
+	ObImage* time[2];
+	ObImage* inven;
 	
 
 

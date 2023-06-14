@@ -10,9 +10,26 @@ Map::Map()
 		sea1[i] = new ObImage(L"map/sea1.gif");
 		sea2[i] = new ObImage(L"map/sea2.gif");
 	}
-		
+
+	time[0] = new ObImage(L"map/time.gif");
+	time[0]->scale.x = time[0]->imageSize.x * 2.0f / 10.0f;
+	time[0]->scale.y = time[0]->imageSize.y * 2.0f ;
+	time[0]->maxFrame.x = 10;
+	
+
+	time[1] = new ObImage(L"map/time.gif");
+	time[1]->scale.x = time[1]->imageSize.x * 2.0f / 10.0f;
+	time[1]->scale.y = time[1]->imageSize.y * 2.0f;
+	time[1]->maxFrame.x = 10;
+	
+
+	inven = new ObImage(L"map/inven.gif");
+	inven->scale.x = inven->imageSize.x * 2.0f;
+	inven->scale.y = inven->imageSize.y * 2.0f;
 	
 	
+
+
 
 	sky->scale.x = app.GetWidth();
 	sky->scale.y = app.GetHeight();
@@ -56,7 +73,9 @@ Map::~Map()
 		delete sea1[i];
 		delete sea2[i];
 	}
-	
+	delete time[0];
+	delete time[1];
+	delete inven;
 
 	TEXTURE->DeleteTexture(L"sky.gif");	
 	TEXTURE->DeleteTexture(L"sea1.gif");	
@@ -83,24 +102,9 @@ void Map::InitFish(Vector2 spwan)
 
 void Map::Update()
 {
-	//¸ÊÀÌµ¿
-	/*if (INPUT->KeyPress(VK_RIGHT))
-	{
-		for (int i = 0;i < SEAMAX;i++)
-		{
-			sea2[i]->uv.x += DELTA * 300.0f / sea2[i]->imageSize.x;
-			sea2[i]->uv.z += DELTA * 300.0f / sea2[i]->imageSize.x;
-		}
-	}
-	else if (INPUT->KeyPress(VK_LEFT))
-	{
-		for (int i = 0;i < SEAMAX;i++)
-		{
-			sea2[i]->uv.x -= DELTA * 300.0f / sea2[i]->imageSize.x;
-			sea2[i]->uv.z -= DELTA * 300.0f / sea2[i]->imageSize.x;
-		}
-	}*/
-	
+	time[0]->SetWorldPos(CAM->position + Vector2(-20,280));
+	time[1]->SetWorldPos(CAM->position + Vector2(20,280));
+	inven->SetWorldPos(CAM->position + Vector2(-150, 280));
 
 	sky->uv.x += DELTA * 50.0f / sky->imageSize.x;
 	sky->uv.z += DELTA * 50.0f / sky->imageSize.x;
@@ -114,7 +118,10 @@ void Map::Update()
 	
 
 	sky->Update();
-	
+	time[0]->Update();
+	time[1]->Update();
+	inven->Update();
+
 	
 	for (int i = 0;i < SEAMAX;i++)
 	{
@@ -148,7 +155,9 @@ void Map::Render()
 		sea2[i]->Render();
 	}
 	
-	
+	time[0]->Render();
+	time[1]->Render();
+	inven->Render();
 
 	
 }
