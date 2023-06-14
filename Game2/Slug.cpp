@@ -7,7 +7,7 @@
 Slug::Slug()
 {
 	hp = 4;
-
+	cannonC = 10;
 	//행동
 	{
 		idle = new ObImage(L"slug/idle.gif");
@@ -78,6 +78,16 @@ Slug::Slug()
 	gun->SetLocalPos(Vector2(-19, 42));
 	gun->maxFrame.x = 17;
 
+	cannon = new ObImage(L"slug/cannon.gif");
+	cannon->scale.x = cannon->imageSize.x * 2.0f / 10.0f;
+	cannon->scale.y = cannon->imageSize.y * 2.0f;
+	cannon->maxFrame.x = 10;
+
+	cannoncol = new ObRect();
+	cannoncol->scale = cannon->scale;
+	//cannoncol->scale -= Vector2(15, 15);
+	cannoncol->isFilled = false;
+
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		bullet[i] = new Bullet;		
@@ -93,6 +103,7 @@ Slug::Slug()
 	crouch_shooting->SetParentRT(*col);
 	gun->SetParentRT(*col);
 	colb->SetParentRT(*col);
+	cannon->SetParentRT(*cannoncol);
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		bullet[i]->SetParentRT(*gun);
@@ -109,6 +120,8 @@ Slug::~Slug()
 	delete crouch_drive;
 	delete col;
 	delete colb;
+	delete cannon;
+	delete cannoncol;
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		delete bullet[i];
@@ -158,8 +171,9 @@ void Slug::Update()
 			crouch->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
 		//shooting
-		if (INPUT->KeyDown('C'))
+		if (INPUT->KeyDown('C') and shootingdelay <=0.0f and cannonC !=0)
 		{
+			Shoot();
 			state = SlugState::SHOOTING;
 			shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
@@ -189,8 +203,9 @@ void Slug::Update()
 			state = SlugState::CROUCH;						
 			crouch->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
-		if (INPUT->KeyDown('C'))
+		if (INPUT->KeyDown('C') and shootingdelay <= 0.0f and cannonC != 0)
 		{
+			Shoot();
 			state = SlugState::SHOOTING;
 			shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
@@ -247,11 +262,7 @@ void Slug::Update()
 		{
 			state = SlugState::IDLE;
 		}
-		if (INPUT->KeyDown('C'))
-		{
-			state = SlugState::CROUCH_SHOOTING;
-			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
-		}
+		
 	}
 	else if (state == SlugState::CROUCH_IDLE)
 	{
@@ -273,8 +284,9 @@ void Slug::Update()
 			state = SlugState::CROUCH_DRIVE;
 			crouch_drive->ChangeAnim(ANIMSTATE::LOOP, 0.05f);
 		}
-		if (INPUT->KeyDown('C'))
+		if (INPUT->KeyDown('C') and shootingdelay <= 0.0f and cannonC != 0)
 		{
+			Shoot();
 			state = SlugState::CROUCH_SHOOTING;
 			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
@@ -295,8 +307,9 @@ void Slug::Update()
 		{
 			state = SlugState::CROUCH_IDLE;
 		}
-		if (INPUT->KeyDown('C'))
+		if (INPUT->KeyDown('C') and shootingdelay <= 0.0f and cannonC != 0)
 		{
+			Shoot();
 			state = SlugState::CROUCH_SHOOTING;
 			crouch_shooting->ChangeAnim(ANIMSTATE::ONCE, 0.02f);
 		}
@@ -375,8 +388,21 @@ void Slug::Update()
 		}
 	}
 	
-	
+	//캐논발사
+	{
+		if (isfire)
+		{
+			cannonG += DOWN * 100 * DELTA;
+			cannoncol->MoveWorldPos((cannondir + cannonG) * DELTA * 10);
+			cannonlife -= DELTA;
+			if (cannonlife <= 0) isfire = false;
+		}
+
+		cannon->rotation.z = atan2f(-(cannondir + cannonG).y, -(cannondir + cannonG).x);
+	}
+
 	if (damagedelay > 0.0f) damagedelay -= DELTA;	
+	if (shootingdelay > 0.0f) shootingdelay -= DELTA;
 
 
 	gravity += 500.0f * DELTA;
@@ -395,6 +421,8 @@ void Slug::Update()
 	shooting->Update();
 	crouch_shooting->Update();
 	gun->Update();
+	cannon->Update();
+	cannoncol->Update();
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		bullet[i]->Update();
@@ -417,6 +445,19 @@ void Slug::OnFloor()
 	gravity = 0.0f;
 	col->SetWorldPosY( -200.0f);
 	col->Update();
+}
+
+void Slug::Shoot()
+{	
+		isfire = true;
+		cannonC--;
+		cannonlife = 3;
+		cannon->ChangeAnim(ANIMSTATE::ONCE, 0.1f);
+		cannonG = Vector2(0, 0);
+		cannondir = Vector2(-50, 20);
+		cannoncol->SetWorldPos(col->GetWorldPos() + Vector2(-90, 70));
+		shootingdelay = 2.0f;
+	
 }
 
 void Slug::Render()
@@ -456,5 +497,11 @@ void Slug::Render()
 	for (int i = 0; i < BULLETMAX; i++)
 	{
 		bullet[i]->Render();
+	}
+
+	if (isfire)
+	{
+		cannon->Render();
+		cannoncol->Render();
 	}
 }

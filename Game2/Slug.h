@@ -31,11 +31,16 @@ private:
 	
 	ObImage* gun;
 	class Bullet* bullet[BULLETMAX];
+
 	ObImage* cannon;
 	ObRect* cannoncol;
+	Vector2 cannonG;
+	bool isfire;
+	float cannonlife;
+	Vector2 cannondir;
 	
 	int hp;
-	int bomb;
+	int cannonC;
 
 	SlugState state;
 	float gravity;
@@ -56,11 +61,14 @@ public:
 
 	void Hit() ;
 	void OnFloor();
+	void Shoot();
 
 	SlugState Getstate() { return state; };
 	ObRect* GetPos() { return col; };
 	ObRect* Getbottom() { return colb; };
 	Bullet* Getbullet(int i) { return bullet[i]; };
+	ObRect* Getcannon() { return cannoncol; };
+	int GetcannonC() { return cannonC; };
 	int GetHP() { return hp; };
 };
 
