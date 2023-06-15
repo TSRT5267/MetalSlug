@@ -7,7 +7,7 @@
 Slug::Slug()
 {
 	hp = 8;
-	cannonC = 10;
+	cannonC = 20;
 	//Çàµ¿
 	{
 		idle = new ObImage(L"slug/idle.gif");
@@ -64,11 +64,12 @@ Slug::Slug()
 	col->isFilled = false;
 	col->pivot = OFFSET_RB;
 	col->pivot += Vector2(-0.1, 0);
+	col->color = Vector4(0, 0, 0, 0);
 
 	colb = new ObRect();
 	colb->scale = idle->scale;
 	colb->scale -= Vector2(50, 110);
-	colb->color = Vector4(0, 0, 0, 1);
+	colb->color = Vector4(0, 0, 0, 0);
 	colb->isFilled = false;
 	colb->pivot = OFFSET_RB;
 
@@ -87,6 +88,7 @@ Slug::Slug()
 	cannoncol->scale = cannon->scale;
 	//cannoncol->scale -= Vector2(15, 15);
 	cannoncol->isFilled = false;
+	cannoncol->color = Vector4(0, 0, 0, 0);
 
 	for (int i = 0; i < BULLETMAX; i++)
 	{

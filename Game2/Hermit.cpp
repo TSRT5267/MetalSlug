@@ -84,6 +84,7 @@ Hermit::Hermit()
 	col->scale.y -= 210;
 	col->isFilled = false;
 	col->pivot = OFFSET_B;
+	col->color = Vector4(0, 0, 0, 0);
 
 	colT = new ObRect();
 	colT->scale = col->scale;
@@ -92,6 +93,7 @@ Hermit::Hermit()
 	colT->SetLocalPos(Vector2(-70, 190));
 	colT->isFilled = false;
 	colT->pivot = OFFSET_B;
+	colT->color = Vector4(0, 0, 0, 0);
 
 	for (int i = 0;i < 3;i++)
 	{
@@ -99,6 +101,7 @@ Hermit::Hermit()
 		bulletcol[i]->scale = bullet[i]->scale;
 		bulletcol[i]->scale -= Vector2(15,15);
 		bulletcol[i]->isFilled = false;	
+		bulletcol[i]->color = Vector4(0, 0, 0, 0);
 	}
 	bulletcol[2]->scale -= Vector2(15, 15);
 

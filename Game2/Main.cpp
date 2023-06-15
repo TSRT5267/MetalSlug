@@ -166,7 +166,7 @@ void Main::LateUpdate()
 				slug->Getbullet(i)->GetPos()->Intersect(hermit->GetPosT()))
 			{
 				//ÃÑÀº 1µ¥¹ÌÁö
-				hermit->Hit(100);
+				hermit->Hit(1);
 				score += 100;
 				slug->Getbullet(i)->Hit();
 			}

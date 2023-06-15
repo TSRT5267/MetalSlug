@@ -18,9 +18,7 @@ Ground::Ground()
 	col->isFilled = false;
 	col->pivot = OFFSET_LT;
 	//col->hasAxis = true;
-	col->color.x = 1.0f;
-	col->color.y = 1.0f;
-	col->color.z = 1.0f;
+	col->color = Vector4(0, 0, 0, 0);
 	col->SetWorldPosY(-200.0f);
 
 	ground->SetParentRT(*col);
