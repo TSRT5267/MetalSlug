@@ -53,7 +53,7 @@ Hermit::Hermit()
 		wave->scale.x = wave->imageSize.x * 2.0f / 12.0f;
 		wave->scale.y = wave->imageSize.y * 2.0f;
 		wave->maxFrame.x = 12;
-		wave->SetLocalPos(Vector2(80, -40));
+		wave->SetLocalPos(Vector2(0, -40));
 		wave->pivot = OFFSET_B;
 
 		for (int i = 0;i < 2;i++)
@@ -69,7 +69,7 @@ Hermit::Hermit()
 		bullet[2]->scale.y = bullet[2]->imageSize.y * 2.0f ;
 		bullet[2]->maxFrame.x = 11;
 
-		for (int i = 0;i < 8;i++)
+		for (int i = 0;i < 50;i++)
 		{
 			die[i] = new ObImage(L"hermit/die.gif");
 			die[i]->scale.x = die[i]->imageSize.x * 2.0f / 25.0f;
@@ -133,7 +133,10 @@ Hermit::~Hermit()
 		delete bullet[i];
 		delete bulletcol[i];
 	}
-	
+	for (int i = 0;i < 50;i++)
+	{
+		delete die[i];
+	}
 
 	TEXTURE->DeleteTexture(L"hermit/walk.gif");
 	TEXTURE->DeleteTexture(L"hermit/walk_cannon.gif");
@@ -241,8 +244,6 @@ void Hermit::Update()
 
 	}
 
-	
-
 	//발사체이동
 	{
 		for (int i = 0;i < 2;i++)
@@ -266,6 +267,15 @@ void Hermit::Update()
 		}
 	}
 
+	//데스신
+	{
+		for (int i = 0;i < 20;i++)
+		{
+			if (die[i]->frame.x == 24) isdie[i] = false;
+
+		}
+	}
+
 	col->Update();
 	colT->Update();
 	walk->Update();
@@ -280,6 +290,10 @@ void Hermit::Update()
 	{
 		bullet[i]->Update();
 		bulletcol[i]->Update();
+	}
+	for (int i = 0;i < 50;i++)
+	{
+		die[i]->Update();
 	}
 }
 
@@ -321,6 +335,12 @@ void Hermit::Render()
 			bulletcol[i]->Render();
 			bullet[i]->Render();
 		}		
+	}
+
+	for (int i = 0;i < 50;i++)
+	{
+		if(isdie[i])
+		die[i]->Render();
 	}
 			
 }
@@ -366,15 +386,19 @@ void Hermit::firecannon()
 
 void Hermit::Die()
 {
-	for (int i = 0;i < 8;i++)
+	for (int i = 0;i < 50;i++)
 	{
-		if (isdie[i])
+		if (not isdie[i])
 		{
-
+			isdie[i] = true;
+			die[i]->SetWorldPosY(-200);
+			die[i]->SetWorldPosX(col->GetWorldPos().x + RANDOM->Float(-2,3)*80);
+			die[i]->ChangeAnim(ANIMSTATE::ONCE, 0.08f);
+			break;
 		}
+
 	}
-
-
+	
 }
 
 

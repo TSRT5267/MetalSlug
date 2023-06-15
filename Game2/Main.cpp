@@ -81,7 +81,11 @@ void Main::Update()
 		if(gamestart) hermit->GetPos()->MoveWorldPos(RIGHT * 100 * DELTA);
 		CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
 	}
-	if (hermit->GetHP() <= 0) hermit->GetPos()->MoveWorldPos(DOWN * DELTA * 10);
+	if (hermit->GetHP() <= 0)
+	{
+		hermit->GetPos()->MoveWorldPos(DOWN * DELTA * 50);
+		if(TIMER->GetTick(delay,0.1))hermit->Die();
+	}
 
 	map->Update();
 	slug->Update();

@@ -25,8 +25,8 @@ private:
 	ObImage* cannonfire;
 	ObImage* destroyed;
 
-	ObImage* die[8];
-	bool isdie[8];
+	ObImage* die[50];
+	bool isdie[50];
 
 	ObImage* bullet[3];
 	ObCircle*	bulletcol[3];

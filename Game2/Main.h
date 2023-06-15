@@ -14,6 +14,8 @@ private:
 	int score;
 	float time;
 
+	float delay;
+
 public:
 	Main();
 	~Main();
