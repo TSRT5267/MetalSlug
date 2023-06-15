@@ -68,6 +68,14 @@ Hermit::Hermit()
 		bullet[2]->scale.x = bullet[2]->imageSize.x * 2.0f / 11.0f;
 		bullet[2]->scale.y = bullet[2]->imageSize.y * 2.0f ;
 		bullet[2]->maxFrame.x = 11;
+
+		for (int i = 0;i < 8;i++)
+		{
+			die[i] = new ObImage(L"hermit/die.gif");
+			die[i]->scale.x = die[i]->imageSize.x * 2.0f / 25.0f;
+			die[i]->scale.y = die[i]->imageSize.y * 2.0f;
+			die[i]->maxFrame.x = 25;
+		}
 	}
 
 	col = new ObRect();
@@ -153,7 +161,7 @@ void Hermit::Update()
 	if (state == HermitState::WALK)
 	{
 
-		if (walk->frame.x == 11 and hp < 300)
+		if (walk->frame.x == 11 and hp <= 300)
 		{
 			walk->frame.x = 0;
 			state = HermitState::DEPLOY_CANNON;
@@ -356,12 +364,17 @@ void Hermit::firecannon()
 
 }
 
-void Hermit::spawn()
+void Hermit::Die()
 {
-	if (col->GetWorldPos().y < -280.0f)
+	for (int i = 0;i < 8;i++)
 	{
-		col->MoveWorldPos(UP * DELTA * 50);		
+		if (isdie[i])
+		{
+
+		}
 	}
+
+
 }
 
 

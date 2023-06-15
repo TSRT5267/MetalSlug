@@ -69,22 +69,19 @@ void Main::Update()
 		
 		if (slug->GetPos()->GetWorldPos().x > 100.0f)
 		{
-			gamestart = true;
-			hermit->spawn();	
+			gamestart = true;	
 		}
 		
-		
-
 	}
 
 	//게임끝 조건
 	if (hermit->GetHP() <= 0 or slug->GetHP() <=0) gameover = true;
-
 	if (not gameover)
 	{
 		if(gamestart) hermit->GetPos()->MoveWorldPos(RIGHT * 100 * DELTA);
 		CAM->position = hermit->GetPos()->GetWorldPos() + Vector2(480, 280);
 	}
+	if (hermit->GetHP() <= 0) hermit->GetPos()->MoveWorldPos(DOWN * DELTA * 10);
 
 	map->Update();
 	slug->Update();

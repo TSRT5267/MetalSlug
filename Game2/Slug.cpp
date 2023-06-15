@@ -401,7 +401,7 @@ void Slug::Update()
 		cannon->rotation.z = atan2f(-(cannondir + cannonG).y, -(cannondir + cannonG).x);
 	}
 
-	if (damagedelay > 0.0f) damagedelay -= DELTA;	
+	if (damagedelay > 0.0f) damagedelay -= DELTA;
 	if (shootingdelay > 0.0f) shootingdelay -= DELTA;
 
 

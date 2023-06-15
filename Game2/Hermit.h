@@ -25,6 +25,9 @@ private:
 	ObImage* cannonfire;
 	ObImage* destroyed;
 
+	ObImage* die[8];
+	bool isdie[8];
+
 	ObImage* bullet[3];
 	ObCircle*	bulletcol[3];
 	ObImage* bulletEF[100];
@@ -49,7 +52,7 @@ public:
 	void firebullet();
 	void firecannon();
 	void Hit(int Damage) { hp -= Damage; };
-	void spawn();
+	void Die();
 
 	ObRect* GetPos() { return col; };
 	ObRect* GetPosT() { return colT; };

@@ -40,6 +40,8 @@ Map::Map()
 			sea2[i]->ChangeAnim(ANIMSTATE::LOOP, 0.1f);
 		}
 
+		
+
 		sky->space = SPACE::SCREEN;
 	}
 
